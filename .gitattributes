@@ -1,0 +1,9 @@
+# Binary assets: never convert line endings
+*.pdf binary
+*.glb binary
+*.hdr binary
+*.exr binary
+*.blend binary
+*.webp binary
+*.jpg binary
+*.png binary

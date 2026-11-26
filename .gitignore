@@ -1,0 +1,6 @@
+node_modules/
+dist/
+__pycache__/
+# Blender pipeline: downloaded CC0 assets and work files
+/pipeline/room/.cache/
+/pipeline/room/out/

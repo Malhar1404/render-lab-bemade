@@ -1,0 +1,5 @@
+html, body, #root { margin: 0; height: 100%; background: #1b1a18; overflow: hidden; }
+body { font-family: system-ui, sans-serif; }
+.moods { position: fixed; left: 16px; bottom: 16px; display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(8px); }
+.moods button { border: 0; padding: 8px 18px; border-radius: 999px; background: transparent; color: #ddd; font: 500 14px system-ui; cursor: pointer; }
+.moods button.on { background: #f3efe8; color: #1b1a18; }
