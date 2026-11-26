@@ -1,0 +1,19 @@
+{
+  "id": "2026-11-26-topic-tools",
+  "date": "2026-11-26",
+  "time": "15:50",
+  "title": "Tools",
+  "kind": "topic",
+  "parent": "2026-11-26-bemade-render-lab",
+  "order": 5,
+  "area": "tooling",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "Helpers for the project itself, such as the dev log you are looking at.",
+  "what": "Tools that help us record and run the work, rather than being part of the room or the viewer.",
+  "why": "A good record of what we did, why and what went wrong makes later work faster and safer.",
+  "how": "So far: the dev log, with its storage, web page, board view and links from the lab and bake script.",
+  "tags": [
+    "tools"
+  ]
+}

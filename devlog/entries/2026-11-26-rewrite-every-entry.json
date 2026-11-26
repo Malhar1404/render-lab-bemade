@@ -1,0 +1,20 @@
+{
+  "id": "2026-11-26-rewrite-every-entry",
+  "date": "2026-11-26",
+  "time": "17:34",
+  "title": "Rewrite every entry",
+  "kind": "sub",
+  "parent": "2026-11-26-dev-log-evidence-board-and-plain-language",
+  "order": 4,
+  "area": "tooling",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "All earlier entries rewritten in plain English and sorted into topics, steps and sub-tasks.",
+  "what": "We rewrote all 14 earlier entries and split the big ones, ending with 56 entries: 1 project root, 5 topics, 14 steps and 36 sub-tasks.",
+  "why": "Part of making the dev log easier to read.",
+  "how": "Jargon moved into tech cards and the collapsed settings. Existing images were moved to the entry they belong to, and `follows` and red strings were added where one thing really depended on another.",
+  "tags": [
+    "devlog",
+    "board"
+  ]
+}

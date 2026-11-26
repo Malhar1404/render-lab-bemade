@@ -1,0 +1,61 @@
+{
+  "id": "2026-11-26-show-the-baked-room",
+  "date": "2026-11-26",
+  "time": "12:31",
+  "title": "Show the baked room",
+  "kind": "sub",
+  "parent": "2026-11-26-lab-viewer-room-table-chairs-and-effects",
+  "order": 1,
+  "area": "viewer",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "The room file loads, and most surfaces simply show their baked light.",
+  "what": "The room component loads the baked room file. Most surfaces just show their light map. The glossy parts are real shiny materials that show only box-projected reflections.",
+  "why": "Baked surfaces are cheap to draw. Only the glossy parts need to react to reflections.",
+  "how": "- Glossy parts: black metal, the credenza's brass, marble and walnut, the oak floor and the window frame.\n- The chandelier hides when you look straight down (within 40 degrees).",
+  "links": [
+    {
+      "id": "2026-11-26-box-projected-probe-for-the-table-and-room",
+      "label": "uses"
+    }
+  ],
+  "tech": [
+    {
+      "name": "three.js",
+      "kind": "library",
+      "plain": "Draws 3D scenes in the web browser."
+    },
+    {
+      "name": "React Three Fiber",
+      "kind": "library",
+      "plain": "Lets us describe a three.js scene with React building blocks."
+    },
+    {
+      "name": "Light maps",
+      "kind": "method",
+      "plain": "Pictures of how bright each surface is, laid over the walls and floor so the browser does not have to calculate light."
+    },
+    {
+      "name": "Box projection",
+      "kind": "method",
+      "plain": "A trick that makes reflections line up with the real walls instead of looking infinitely far away."
+    }
+  ],
+  "files": [
+    "src/scene/Room.tsx"
+  ],
+  "tags": [
+    "viewer"
+  ],
+  "meta": {
+    "basicMaterials": "most materials become MeshBasicMaterial with the light map",
+    "standardMaterials": [
+      "black_metal",
+      "credenza_brass",
+      "credenza_marble",
+      "credenza_walnut",
+      "floor_oak",
+      "window_frame"
+    ]
+  }
+}

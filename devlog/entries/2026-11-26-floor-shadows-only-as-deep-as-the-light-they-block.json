@@ -1,0 +1,18 @@
+{
+  "id": "2026-11-26-floor-shadows-only-as-deep-as-the-light-they-block",
+  "date": "2026-11-26",
+  "time": "17:31",
+  "title": "Floor shadows only as deep as the light they block",
+  "kind": "sub",
+  "parent": "2026-11-26-live-lamps-sun-floor-shadows-and-a-mirror-in-the",
+  "area": "lighting",
+  "outcome": "open",
+  "author": "claude",
+  "what": "Floor shadows were hard, near black and came from every light at once. Now the floor only darkens by the share of light the furniture really blocks, so the far floor lamp leaves almost no shadow and the chandelier leaves a soft pool under the table.",
+  "why": "The first version showed every shadow at full strength, ignoring that the room already has plenty of baked light. It looked fake.",
+  "how": "The floor shadow layer now compares the light each live lamp brings to a point with the baked light already there. The floor lamp no longer casts shadows (far away, shaded, and costly). Shadows are softer and the sun's shadow map is smaller to save graphics memory.",
+  "tags": [
+    "shadows",
+    "evening"
+  ]
+}

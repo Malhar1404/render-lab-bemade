@@ -1,0 +1,43 @@
+{
+  "id": "2026-11-26-walls-floor-and-glass-wall",
+  "date": "2026-11-26",
+  "time": "10:31",
+  "title": "Walls, floor and glass wall",
+  "kind": "sub",
+  "parent": "2026-11-26-room-built-in-blender-with-build-room-py",
+  "order": 1,
+  "area": "pipeline",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "The room shell: floor, ceiling, walls and a long glass wall onto the garden.",
+  "what": "We built the room shell: floor, ceiling, walls and a glass wall.",
+  "why": "Everything else sits inside this shell, and the glass wall lets the garden light in.",
+  "how": "The room is 8.6 m long, 6.2 m wide and 3.2 m high. The glass wall runs from 3.9 m left of the middle to 2.4 m right of it.",
+  "tech": [
+    {
+      "name": "Blender",
+      "kind": "tool",
+      "plain": "Free 3D software. We use it to build the room and to calculate how light falls in it."
+    },
+    {
+      "name": "Python scripts",
+      "kind": "method",
+      "plain": "Small programs that tell Blender what to build and bake, so every step can be repeated."
+    }
+  ],
+  "files": [
+    "pipeline/room/build_room.py"
+  ],
+  "tags": [
+    "room"
+  ],
+  "meta": {
+    "RX": 4.3,
+    "RY": 3.1,
+    "H": 3.2,
+    "glassWallX": [
+      -3.9,
+      2.4
+    ]
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "id": "2026-11-26-room-built-in-blender-with-build-room-py",
+  "date": "2026-11-26",
+  "time": "10:30",
+  "title": "Building the room in Blender",
+  "parent": "2026-11-26-topic-room",
+  "order": 2,
+  "area": "pipeline",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "The whole room was built by a script in Blender, with morning light.",
+  "what": "We built the complete room with a script: the walls, the glass wall, the floor, the rug, the credenza, the art, the chandelier, the plants and fig, the floor lamp and the curtains. It starts with morning lighting.",
+  "why": "A script that rebuilds the room from nothing makes every change repeatable, and the user can watch it happen in their open Blender.",
+  "how": "We edit the script `build_room.py`, then run it in the user's open Blender through the Blender MCP link (\"script, run live\"). The script can safely reset the scene each time.\n\nThe stand-in table and chairs (the Preview group) are kept out of the baking.",
+  "wrong": "- Glass that bends light blocked the sun and sky in Blender, and the room came out black.\n- Resetting Blender to its factory settings during a live session breaks the connection to Claude.",
+  "fix": "- The windows are now thin see-through glass.\n- The chandelier globes are thin glass shells that cast no shadow, lit by small lights inside.\n- We never reset Blender to factory settings during a live session.",
+  "tech": [
+    {
+      "name": "Blender",
+      "kind": "tool",
+      "plain": "Free 3D software. We use it to build the room and to calculate how light falls in it."
+    },
+    {
+      "name": "Cycles",
+      "kind": "tool",
+      "plain": "Blender's realistic renderer. It follows light the way a camera would see it."
+    },
+    {
+      "name": "Python scripts",
+      "kind": "method",
+      "plain": "Small programs that tell Blender what to build and bake, so every step can be repeated."
+    },
+    {
+      "name": "Blender MCP",
+      "kind": "tool",
+      "plain": "A link that lets Claude send commands to the user's open Blender."
+    }
+  ],
+  "files": [
+    "pipeline/room/build_room.py"
+  ],
+  "tags": [
+    "blender",
+    "room",
+    "morning"
+  ],
+  "images": [
+    {
+      "file": "preview_a_graded.jpg",
+      "caption": "Cycles preview, camera a (colour-matched)",
+      "kind": "render"
+    },
+    {
+      "file": "preview_r_graded.jpg",
+      "caption": "Cycles preview, camera r: the rug and chair legs (colour-matched)",
+      "kind": "render"
+    }
+  ],
+  "meta": {
+    "backfilled": true,
+    "source": "CONTEXT.md and git log",
+    "note": "Written afterwards; the time only orders the timeline.",
+    "room": {
+      "RX": 4.3,
+      "RY": 3.1,
+      "H": 3.2
+    },
+    "sunElevationDeg": 30,
+    "world": "garden_4k"
+  }
+}

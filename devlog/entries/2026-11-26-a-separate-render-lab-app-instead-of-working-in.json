@@ -1,0 +1,60 @@
+{
+  "id": "2026-11-26-a-separate-render-lab-app-instead-of-working-in",
+  "date": "2026-11-26",
+  "time": "09:30",
+  "title": "A separate lab app",
+  "parent": "2026-11-26-topic-setup-and-approach",
+  "order": 2,
+  "area": "tooling",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "We created a small app of our own for lighting experiments, instead of working inside the configurator.",
+  "what": "We created `render-lab`: its own folder and git repository with a minimal app.\nIt copies the table's look from the configurator, so we can work on lighting and rendering without the configurator's screens.",
+  "why": "The configurator is big. A clean lab makes lighting experiments quick, and keeps the room work apart until it is ready to move back.",
+  "how": "- The lab uses the same versions of its main tools as the configurator, so code can move back easily.\n- Two helper files were copied over unchanged.\n- Start it with `npm run dev`; check the code for mistakes with `npm run typecheck`.",
+  "next": "Move the finished room and table lighting back into the configurator (`Room.tsx` and `Env.tsx` in `demo-bemade`).",
+  "tech": [
+    {
+      "name": "Vite",
+      "kind": "tool",
+      "plain": "Runs the lab in the browser while we work and builds it for release."
+    },
+    {
+      "name": "React",
+      "kind": "library",
+      "plain": "The toolkit that builds the lab and dev log pages from small parts."
+    },
+    {
+      "name": "TypeScript",
+      "kind": "tool",
+      "plain": "A stricter form of JavaScript that catches mistakes before the code runs."
+    },
+    {
+      "name": "three.js",
+      "kind": "library",
+      "plain": "Draws 3D scenes in the web browser."
+    },
+    {
+      "name": "git",
+      "kind": "tool",
+      "plain": "Saves the project history so any change can be compared or undone."
+    }
+  ],
+  "files": [
+    "package.json",
+    "vite.config.ts",
+    "src/main.tsx",
+    "src/core/topShade.ts",
+    "src/core/chandelierLight.ts"
+  ],
+  "tags": [
+    "setup",
+    "decision"
+  ],
+  "meta": {
+    "backfilled": true,
+    "source": "CONTEXT.md and git log",
+    "note": "Written afterwards; the time only orders the timeline.",
+    "devServer": "http://127.0.0.1:5180"
+  }
+}

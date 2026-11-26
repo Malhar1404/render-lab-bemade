@@ -1,0 +1,50 @@
+{
+  "id": "2026-11-26-main-page-and-control-panel",
+  "date": "2026-11-26",
+  "time": "13:00",
+  "title": "Main page and control panel",
+  "kind": "sub",
+  "parent": "2026-11-26-lab-viewer-room-table-chairs-and-effects",
+  "order": 4,
+  "area": "viewer",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "The page itself, with five camera views, Day and Evening buttons, and sliders.",
+  "what": "The main page holds the 3D scene, five camera views (hero, front, window, top and low), Day and Evening buttons, and the sliders.",
+  "why": "We need to look at the room from useful angles and change settings quickly.",
+  "how": "The camera has a narrow 30 degree lens, Neutral tone mapping and shadows on. The sliders come from leva.",
+  "tech": [
+    {
+      "name": "React Three Fiber",
+      "kind": "library",
+      "plain": "Lets us describe a three.js scene with React building blocks."
+    },
+    {
+      "name": "leva",
+      "kind": "library",
+      "plain": "Draws the small control panel with sliders in the lab."
+    },
+    {
+      "name": "React",
+      "kind": "library",
+      "plain": "The toolkit that builds the lab and dev log pages from small parts."
+    }
+  ],
+  "files": [
+    "src/App.tsx"
+  ],
+  "tags": [
+    "viewer"
+  ],
+  "meta": {
+    "fov": 30,
+    "toneMapping": "Neutral",
+    "views": [
+      "hero",
+      "front",
+      "window",
+      "top",
+      "low"
+    ]
+  }
+}

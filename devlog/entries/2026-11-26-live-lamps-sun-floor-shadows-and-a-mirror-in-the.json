@@ -1,0 +1,31 @@
+{
+  "id": "2026-11-26-live-lamps-sun-floor-shadows-and-a-mirror-in-the",
+  "date": "2026-11-26",
+  "time": "17:05",
+  "title": "Live lamps, sun, floor shadows and a mirror in the table top",
+  "area": "lighting",
+  "outcome": "open",
+  "author": "claude",
+  "what": "The table and chairs are now lit by live lights placed exactly where the room's lamps and sun are: the sun through the glass wall by day, the chandelier and floor lamp by evening. Their shadows fall on each other and on the floor. The table top now mirrors the real room, chairs and chandelier, sharp when polished and soft on silk.",
+  "why": "The room's light is baked into pictures, so the furniture only got a general glow from a 360 photo. It had no proper shadows on the floor and its top reflected a fixed photo, not what really stands round it. That is what made it look pasted in.",
+  "how": "Live lights placed from the Blender fixture positions, with soft shadows. A see-through floor shows only their shadows; by day only inside the sun patch from the window. The room's own glossy surfaces ignore these lights so they are not lit twice. For the mirror, each frame the scene is drawn once more from the camera flipped in the top's plane, and the top uses that picture, blurred by its roughness. New sliders: sun, chandelier, floor lamp, floor shadow, top mirror. Not yet checked in a browser.",
+  "tech": [
+    {
+      "name": "PCSS soft shadows",
+      "kind": "method",
+      "plain": "shadows that are sharp where an object touches and blur further away, like real ones"
+    },
+    {
+      "name": "Planar reflection",
+      "kind": "method",
+      "plain": "a second picture of the room taken from below the mirror, used as the table top's reflection"
+    }
+  ],
+  "tags": [
+    "lighting",
+    "shadows",
+    "reflection",
+    "evening",
+    "day"
+  ]
+}

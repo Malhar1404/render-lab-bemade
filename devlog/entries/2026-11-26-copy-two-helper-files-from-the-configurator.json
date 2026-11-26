@@ -1,0 +1,23 @@
+{
+  "id": "2026-11-26-copy-two-helper-files-from-the-configurator",
+  "date": "2026-11-26",
+  "time": "09:40",
+  "title": "Copy two helper files",
+  "kind": "sub",
+  "parent": "2026-11-26-a-separate-render-lab-app-instead-of-working-in",
+  "order": 3,
+  "area": "tooling",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "Two helper files came over unchanged from the configurator.",
+  "what": "We copied the table-shading helper (`topShade.ts`) and the chandelier-light helper (`chandelierLight.ts`) unchanged from the configurator.",
+  "why": "So the table looks the same in the lab as it does in the configurator.",
+  "how": "Copied from `M:\\projects\\BeMade\\demo-bemade`, branch `m-dev-2`. The room work there is in commits `9c13b69` and `76a0d0b`.",
+  "files": [
+    "src/core/topShade.ts",
+    "src/core/chandelierLight.ts"
+  ],
+  "tags": [
+    "setup"
+  ]
+}

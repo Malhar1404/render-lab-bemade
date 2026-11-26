@@ -1,0 +1,41 @@
+{
+  "id": "2026-11-26-bemade-render-lab",
+  "date": "2026-11-26",
+  "time": "08:50",
+  "title": "BeMade Render Lab",
+  "kind": "topic",
+  "order": 0,
+  "area": "other",
+  "outcome": "partial",
+  "author": "claude",
+  "summary": "A test workshop for making the BeMade table configurator's room and lighting look like a real photograph.",
+  "what": "BeMade Render Lab is a separate test app. In it we build one room, light it in several moods (morning, afternoon and evening), and check how a table looks inside it.\n\nWhen the results are good, they move back into the main BeMade configurator.",
+  "why": "The main configurator is big. A small, separate lab lets us try lighting ideas quickly, without disturbing the real product.",
+  "how": "The room is built and lit in Blender, a free 3D program. The finished light is saved as pictures. A web page then shows the room with the table, and a control panel lets us tune the look by eye.\n\nThe board below is split into five topics: setup, the room, the lighting moods, the viewer, and tools.",
+  "next": "- Try a live-lighting prototype later.\n- Move the finished room and table lighting back into the main configurator.",
+  "tech": [
+    {
+      "name": "Blender",
+      "kind": "tool",
+      "plain": "Free 3D software. We use it to build the room and to calculate how light falls in it."
+    },
+    {
+      "name": "three.js",
+      "kind": "library",
+      "plain": "Draws 3D scenes in the web browser."
+    },
+    {
+      "name": "React Three Fiber",
+      "kind": "library",
+      "plain": "Lets us describe a three.js scene with React building blocks."
+    },
+    {
+      "name": "Vite",
+      "kind": "tool",
+      "plain": "Runs the lab in the browser while we work and builds it for release."
+    }
+  ],
+  "tags": [
+    "project"
+  ]
+}

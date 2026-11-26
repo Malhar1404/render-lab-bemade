@@ -1,0 +1,19 @@
+{
+  "id": "2026-11-26-topic-setup-and-approach",
+  "date": "2026-11-26",
+  "time": "08:55",
+  "title": "Setup and approach",
+  "kind": "topic",
+  "parent": "2026-11-26-bemade-render-lab",
+  "order": 1,
+  "area": "other",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "Why the project exists, the rules it follows, and how the lab was set up.",
+  "what": "The first decisions: what we are trying to achieve, the rules we must keep, and the separate lab app we work in.",
+  "why": "Getting the goal and the rules clear first keeps all later work pointed in one direction.",
+  "how": "Three steps: write down the goal and rules, create the lab app, and save it in git for the first time.",
+  "tags": [
+    "setup"
+  ]
+}

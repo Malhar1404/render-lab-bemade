@@ -1,0 +1,30 @@
+{
+  "id": "2026-11-26-fill-in-the-earlier-work",
+  "date": "2026-11-26",
+  "time": "16:45",
+  "title": "Fill in the earlier work",
+  "kind": "sub",
+  "parent": "2026-11-26-dev-log-system",
+  "order": 5,
+  "area": "tooling",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "Entries for the earlier work were written afterwards from CONTEXT.md and git history.",
+  "what": "We wrote 13 entries afterwards for the earlier work, from CONTEXT.md and the git history, with images from `pipeline/room/out/` (shrunk to JPG, at most 1600 pixels wide).",
+  "why": "The log should cover the whole project, not just the work done after it was added.",
+  "how": "Their times are only there to put them in order on the timeline.",
+  "tech": [
+    {
+      "name": "git",
+      "kind": "tool",
+      "plain": "Saves the project history so any change can be compared or undone."
+    }
+  ],
+  "tags": [
+    "devlog",
+    "backfill"
+  ],
+  "meta": {
+    "entriesBackfilled": 13
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "id": "2026-11-26-mood-grading-tests-morning-and-afternoon-previews",
+  "date": "2026-11-26",
+  "time": "13:20",
+  "title": "Comparing morning and afternoon",
+  "parent": "2026-11-26-topic-lighting-moods",
+  "order": 2,
+  "area": "lighting",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "We made preview pictures of the room in morning and afternoon light and colour-matched them to compare.",
+  "what": "We rendered Blender previews of the room in a morning mood and an afternoon mood, colour-matched them, and compared how the room reads at different times of day.",
+  "why": "To choose the day lighting by looking at the same view in different light.",
+  "how": "- A script makes the previews of each mood from four cameras (a, b, c and r).\n- Another script colour-matches them.\n- The slider compares the morning (left, labelled Before) with the afternoon (right, labelled After) from camera a. Before and After are only the slider's names here.",
+  "beforeText": "Morning light, seen from camera a.",
+  "afterText": "Afternoon light, seen from the same camera.",
+  "follows": [
+    "2026-11-26-room-built-in-blender-with-build-room-py"
+  ],
+  "tech": [
+    {
+      "name": "Cycles",
+      "kind": "tool",
+      "plain": "Blender's realistic renderer. It follows light the way a camera would see it."
+    },
+    {
+      "name": "Python scripts",
+      "kind": "method",
+      "plain": "Small programs that tell Blender what to build and bake, so every step can be repeated."
+    }
+  ],
+  "files": [
+    "pipeline/room/preview_room.py",
+    "pipeline/room/post_grade.py"
+  ],
+  "tags": [
+    "mood",
+    "previews"
+  ],
+  "images": [
+    {
+      "file": "mood_morning_a_graded.jpg",
+      "caption": "Morning, camera a (colour-matched)",
+      "kind": "before"
+    },
+    {
+      "file": "mood_afternoon_a_graded.jpg",
+      "caption": "Afternoon, camera a (colour-matched)",
+      "kind": "after"
+    }
+  ],
+  "meta": {
+    "backfilled": true,
+    "source": "CONTEXT.md and git log",
+    "note": "Written afterwards; the time only orders the timeline.",
+    "moods": [
+      "morning",
+      "afternoon"
+    ],
+    "camera": "a"
+  }
+}

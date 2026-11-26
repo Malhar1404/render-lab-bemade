@@ -1,0 +1,55 @@
+{
+  "id": "2026-11-26-garden-sky-and-graded-textures",
+  "date": "2026-11-26",
+  "time": "10:00",
+  "title": "Sky and textures",
+  "parent": "2026-11-26-topic-room",
+  "order": 1,
+  "area": "pipeline",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "We gathered a garden sky and surface textures, took the sun out of the sky, and colour-matched everything.",
+  "what": "We downloaded free textures and a garden sky picture, removed the sun from the sky, and colour-corrected the room's surfaces.",
+  "why": "The room needs a view outdoors and surfaces that look real. The sun is removed from the sky picture so Blender can add its own sun at exactly the right angle and strength.",
+  "how": "- Download the free textures and the sky.\n- Prepare the garden sky without its sun, in several sizes.\n- Colour-correct the oak, paint, walnut, linen, marble and other textures, and generate the rug, the rug fuzz and the fig leaf pictures.",
+  "tech": [
+    {
+      "name": "Poly Haven",
+      "kind": "library",
+      "plain": "A free library of textures and sky pictures that anyone may use."
+    },
+    {
+      "name": "HDRI sky picture",
+      "kind": "method",
+      "plain": "A photo that records a huge range of brightness, used as a realistic sky and light source."
+    },
+    {
+      "name": "Python scripts",
+      "kind": "method",
+      "plain": "Small programs that tell Blender what to build and bake, so every step can be repeated."
+    }
+  ],
+  "files": [
+    "pipeline/room/fetch_assets.py",
+    "pipeline/room/prepare_env.py",
+    "pipeline/room/prepare_textures.py"
+  ],
+  "tags": [
+    "textures",
+    "hdri",
+    "pipeline"
+  ],
+  "images": [
+    {
+      "file": "out_floor_prev.jpg",
+      "caption": "The colour-corrected oak floor texture",
+      "kind": "render"
+    }
+  ],
+  "meta": {
+    "backfilled": true,
+    "source": "CONTEXT.md and git log",
+    "note": "Written afterwards; the time only orders the timeline.",
+    "hdri": "suburban_garden 8k, sun removed"
+  }
+}

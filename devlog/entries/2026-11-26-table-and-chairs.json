@@ -1,0 +1,51 @@
+{
+  "id": "2026-11-26-table-and-chairs",
+  "date": "2026-11-26",
+  "time": "12:40",
+  "title": "Table and chairs",
+  "kind": "sub",
+  "parent": "2026-11-26-lab-viewer-room-table-chairs-and-effects",
+  "order": 2,
+  "area": "viewer",
+  "outcome": "partial",
+  "author": "claude",
+  "summary": "The table has a polished glossy top; the chairs are placed with the configurator's formula.",
+  "what": "The table's top is a glossy material with a clear polished coat. The board and base use the configurator's materials, and the Aria chairs are placed with the configurator's formula.",
+  "why": "The table is the product, so it needs the most careful shading.",
+  "how": "- The table's shading and the reflection trick are added on top of the materials.\n- The top's shine is updated every frame.",
+  "wrong": "We have not yet confirmed in a real browser that the table's shaders compile without errors.",
+  "tech": [
+    {
+      "name": "three.js",
+      "kind": "library",
+      "plain": "Draws 3D scenes in the web browser."
+    },
+    {
+      "name": "React Three Fiber",
+      "kind": "library",
+      "plain": "Lets us describe a three.js scene with React building blocks."
+    },
+    {
+      "name": "Box projection",
+      "kind": "method",
+      "plain": "A trick that makes reflections line up with the real walls instead of looking infinitely far away."
+    }
+  ],
+  "files": [
+    "src/scene/Table.tsx",
+    "src/scene/Chairs.tsx",
+    "src/config/table.ts"
+  ],
+  "tags": [
+    "viewer",
+    "table"
+  ],
+  "meta": {
+    "top": "MeshPhysicalMaterial, clearcoat 1, clearcoat roughness 0.03",
+    "board": "MDF board and base use the configurator's materials",
+    "functions": [
+      "applyTableShading",
+      "updateTopShade (every frame)"
+    ]
+  }
+}

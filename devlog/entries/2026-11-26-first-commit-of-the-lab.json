@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-26-first-commit-of-the-lab",
+  "date": "2026-11-26",
+  "time": "13:30",
+  "title": "First save of the lab in git",
+  "parent": "2026-11-26-topic-setup-and-approach",
+  "order": 3,
+  "area": "tooling",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "The lab's work was saved in git for the first time.",
+  "what": "We saved the lab in git for the first time: the app, the Blender scripts, the baked room files and the CONTEXT.md notes.",
+  "why": "A clean starting point to compare the evening-mood work against.",
+  "how": "One save (commit), called 'First commit' (`0f19f9a`, 2026-11-26 13:00). Work after it, such as the evening mood, is not saved yet: we only commit when the user asks.",
+  "tech": [
+    {
+      "name": "git",
+      "kind": "tool",
+      "plain": "Saves the project history so any change can be compared or undone."
+    }
+  ],
+  "files": [
+    "CONTEXT.md",
+    "package.json",
+    "pipeline/room/",
+    "public/",
+    "src/"
+  ],
+  "tags": [
+    "git"
+  ],
+  "commit": "0f19f9a",
+  "meta": {
+    "backfilled": true,
+    "source": "CONTEXT.md and git log",
+    "note": "Written afterwards; the time only orders the timeline."
+  }
+}

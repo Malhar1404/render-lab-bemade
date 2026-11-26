@@ -1,0 +1,42 @@
+{
+  "id": "2026-11-26-keep-the-newer-three-js",
+  "date": "2026-11-26",
+  "time": "09:35",
+  "title": "Keep the newer three.js",
+  "kind": "sub",
+  "parent": "2026-11-26-a-separate-render-lab-app-instead-of-working-in",
+  "order": 2,
+  "area": "tooling",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "We decided not to downgrade three.js, because the reflection trick we need works in this version.",
+  "what": "We decided not to downgrade the three.js drawing library to an older version.",
+  "why": "Box projection (a reflection trick) works in the version we have, and the light-calculating library planned for later needs a recent version.",
+  "how": "A decision only: no change was needed.",
+  "links": [
+    {
+      "id": "2026-11-26-box-projected-probe-for-the-table-and-room",
+      "label": "needed by"
+    }
+  ],
+  "tech": [
+    {
+      "name": "three.js",
+      "kind": "library",
+      "plain": "Draws 3D scenes in the web browser."
+    },
+    {
+      "name": "Box projection",
+      "kind": "method",
+      "plain": "A trick that makes reflections line up with the real walls instead of looking infinitely far away."
+    },
+    {
+      "name": "three-gpu-pathtracer",
+      "kind": "library",
+      "plain": "Planned for later: it refines the picture to photo quality when the view stops moving."
+    }
+  ],
+  "tags": [
+    "decision"
+  ]
+}

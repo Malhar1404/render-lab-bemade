@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-26-write-the-box-projection-helper",
+  "date": "2026-11-26",
+  "time": "13:11",
+  "title": "Write the box-projection helper",
+  "kind": "sub",
+  "parent": "2026-11-26-box-projected-probe-for-the-table-and-room",
+  "order": 1,
+  "area": "viewer",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "A helper that corrects reflections, without removing the configurator's own patches.",
+  "what": "We wrote a helper that adds the box-projection correction to materials, on top of any patch they already have, and a shared switch to turn it on and off.",
+  "why": "The configurator already patches its materials, and those patches must keep working.",
+  "how": "The helper chains onto any existing patch. The on/off switch is the box projection slider.",
+  "tech": [
+    {
+      "name": "Box projection",
+      "kind": "method",
+      "plain": "A trick that makes reflections line up with the real walls instead of looking infinitely far away."
+    },
+    {
+      "name": "three.js",
+      "kind": "library",
+      "plain": "Draws 3D scenes in the web browser."
+    }
+  ],
+  "files": [
+    "src/core/boxProjection.ts"
+  ],
+  "tags": [
+    "reflections"
+  ],
+  "meta": {
+    "mechanism": "chains onto any existing onBeforeCompile; a shared uniform turns it on and off"
+  }
+}

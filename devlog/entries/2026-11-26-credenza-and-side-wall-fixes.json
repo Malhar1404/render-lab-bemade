@@ -1,0 +1,43 @@
+{
+  "id": "2026-11-26-credenza-and-side-wall-fixes",
+  "date": "2026-11-26",
+  "time": "12:00",
+  "title": "Credenza and side walls",
+  "parent": "2026-11-26-topic-room",
+  "order": 4,
+  "area": "materials",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "After the first bakes, the credenza and the walls beside the glass wall were fixed.",
+  "what": "After the first bakes we fixed two things: the credenza, which has to match the reference image, and the walls beside the glass wall, which had to bake correctly.",
+  "why": "The credenza has to match the reference, and the walls beside the glass wall must bake without errors.",
+  "how": "Both fixes are in `build_room.py`, and the room was baked again afterwards. The exact problems and fixes were not written down at the time, so this entry only records that they were made and where the code is.",
+  "follows": [
+    "2026-11-26-morning-bake-light-maps-probe-and-glb"
+  ],
+  "tech": [
+    {
+      "name": "Blender",
+      "kind": "tool",
+      "plain": "Free 3D software. We use it to build the room and to calculate how light falls in it."
+    },
+    {
+      "name": "Python scripts",
+      "kind": "method",
+      "plain": "Small programs that tell Blender what to build and bake, so every step can be repeated."
+    }
+  ],
+  "files": [
+    "pipeline/room/build_room.py"
+  ],
+  "tags": [
+    "credenza",
+    "walls"
+  ],
+  "meta": {
+    "backfilled": true,
+    "source": "CONTEXT.md and git log",
+    "note": "Written afterwards; the time only orders the timeline.",
+    "detail": "incomplete: the specific fixes were not recorded"
+  }
+}

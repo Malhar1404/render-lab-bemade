@@ -1,0 +1,41 @@
+{
+  "id": "2026-11-26-morning-light",
+  "date": "2026-11-26",
+  "time": "10:50",
+  "title": "Morning light",
+  "kind": "sub",
+  "parent": "2026-11-26-room-built-in-blender-with-build-room-py",
+  "order": 3,
+  "area": "lighting",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "A low morning sun, the garden sky, a hidden fill light over the table and small bulb lights.",
+  "what": "We lit the room with morning light.",
+  "why": "Morning is the first mood we want to see.",
+  "how": "- A sun 30 degrees above the horizon.\n- The garden sky picture as the world.\n- A hidden fill light over the table that the camera cannot see.\n- Bulb lights.",
+  "tech": [
+    {
+      "name": "Blender",
+      "kind": "tool",
+      "plain": "Free 3D software. We use it to build the room and to calculate how light falls in it."
+    },
+    {
+      "name": "Cycles",
+      "kind": "tool",
+      "plain": "Blender's realistic renderer. It follows light the way a camera would see it."
+    }
+  ],
+  "files": [
+    "pipeline/room/build_room.py"
+  ],
+  "tags": [
+    "room",
+    "morning",
+    "lighting"
+  ],
+  "meta": {
+    "sunElevationDeg": 30,
+    "world": "garden_4k",
+    "fill": "table_fill area light, hidden from camera"
+  }
+}

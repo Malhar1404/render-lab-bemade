@@ -1,0 +1,34 @@
+{
+  "id": "2026-11-26-furniture-and-decor",
+  "date": "2026-11-26",
+  "time": "10:40",
+  "title": "Furniture and decor",
+  "kind": "sub",
+  "parent": "2026-11-26-room-built-in-blender-with-build-room-py",
+  "order": 2,
+  "area": "pipeline",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "The rug, credenza, art, chandelier, plants, floor lamp and curtains.",
+  "what": "We added the rug, the credenza, the art, the chandelier, the plants and fig, the floor lamp and the curtains.",
+  "why": "These are the things that make the room look lived in and match the reference images.",
+  "how": "- The credenza follows the reference: smoked walnut, a door, two stacked drawers and another door, a marble top with lips, black sled legs, and decor.\n- The rug is 5 m by 3.5 m.",
+  "tech": [
+    {
+      "name": "Blender",
+      "kind": "tool",
+      "plain": "Free 3D software. We use it to build the room and to calculate how light falls in it."
+    },
+    {
+      "name": "Python scripts",
+      "kind": "method",
+      "plain": "Small programs that tell Blender what to build and bake, so every step can be repeated."
+    }
+  ],
+  "files": [
+    "pipeline/room/build_room.py"
+  ],
+  "tags": [
+    "room"
+  ]
+}

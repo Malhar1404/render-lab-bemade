@@ -1,0 +1,56 @@
+{
+  "id": "2026-11-26-bake-the-light-maps",
+  "date": "2026-11-26",
+  "time": "11:01",
+  "title": "Bake the light maps",
+  "kind": "sub",
+  "parent": "2026-11-26-morning-bake-light-maps-probe-and-glb",
+  "order": 1,
+  "area": "pipeline",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "Blender works out the light on each surface and saves one picture per group of surfaces.",
+  "what": "Blender works out the light on each surface and saves one picture per group of surfaces: the floor, each wall, the ceiling, the rug, the credenza and more.",
+  "why": "These pictures are the baked light. The web page lays them over the room.",
+  "how": "- The bake keeps the direct and the bounced light, but no colour.\n- Each light map sits on a second set of coordinates on the surface.\n- Bigger surfaces get bigger pictures: 2048 pixels for the floor, each wall, the ceiling, the rug and the credenza; 1024 for the curtains, art, terrace, plants and fig; 512 for the window and lamp.\n- The rug uses a flat top-down mapping.",
+  "tech": [
+    {
+      "name": "Cycles",
+      "kind": "tool",
+      "plain": "Blender's realistic renderer. It follows light the way a camera would see it."
+    },
+    {
+      "name": "Baking",
+      "kind": "method",
+      "plain": "Calculating the light once, in advance, and saving the result as pictures."
+    },
+    {
+      "name": "Light maps",
+      "kind": "method",
+      "plain": "Pictures of how bright each surface is, laid over the walls and floor so the browser does not have to calculate light."
+    }
+  ],
+  "files": [
+    "pipeline/room/bake_room.py",
+    "pipeline/room/run_bake.sh"
+  ],
+  "tags": [
+    "bake",
+    "day"
+  ],
+  "images": [
+    {
+      "file": "lm_check.jpg",
+      "caption": "Check sheet of the day light maps",
+      "kind": "screenshot"
+    }
+  ],
+  "meta": {
+    "mapSizes": {
+      "512": "window, lamp",
+      "1024": "curtains, art, terrace, plants, fig",
+      "2048": "floor, each wall, ceiling, rug, credenza"
+    },
+    "uvLayer": "lightmap (smart project, packed, stretched to fill)"
+  }
+}

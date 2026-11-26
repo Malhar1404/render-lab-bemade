@@ -1,0 +1,43 @@
+{
+  "id": "2026-11-26-generate-the-loomed-rug",
+  "date": "2026-11-26",
+  "time": "11:40",
+  "title": "Generate the loomed rug",
+  "kind": "sub",
+  "parent": "2026-11-26-rug-a-generated-loomed-rug-instead-of-a",
+  "order": 2,
+  "area": "materials",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "A script makes a seamless hand-loomed wool texture that the room uses.",
+  "what": "We wrote three ways to generate a rug texture. The room uses the hand-loomed one.",
+  "why": "A generated texture repeats seamlessly and its colour is under our control.",
+  "how": "- A heathered wool woven from a hessian pattern.\n- A pile made from Carpet013.\n- A hand-loomed seamless tile, 1 m wide at 2048 pixels. This is the one the room uses.",
+  "tech": [
+    {
+      "name": "Seamless tile",
+      "kind": "method",
+      "plain": "A small picture made to repeat across a big surface with no visible seams."
+    },
+    {
+      "name": "Python scripts",
+      "kind": "method",
+      "plain": "Small programs that tell Blender what to build and bake, so every step can be repeated."
+    }
+  ],
+  "files": [
+    "pipeline/room/prepare_textures.py"
+  ],
+  "tags": [
+    "rug",
+    "textures"
+  ],
+  "meta": {
+    "generators": [
+      "make_rug",
+      "make_rug_pile",
+      "make_loomed_rug"
+    ],
+    "tile": "2048 px, 1 m"
+  }
+}

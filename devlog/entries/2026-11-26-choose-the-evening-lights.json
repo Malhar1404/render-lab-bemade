@@ -1,0 +1,47 @@
+{
+  "id": "2026-11-26-choose-the-evening-lights",
+  "date": "2026-11-26",
+  "time": "14:23",
+  "title": "Choose the lights",
+  "kind": "sub",
+  "parent": "2026-11-26-evening-mood-late-dusk-with-lamps-baked-and-wired",
+  "order": 1,
+  "area": "lighting",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "Late dusk with no sun: a few warm lamps and a blue-tinted sky.",
+  "what": "We chose the lighting for the evening mood: late dusk without a sun, and a set of artificial lights.",
+  "why": "The lamps should do most of the work, so the room feels like evening without being over-bright.",
+  "how": "- Late dusk: no sun, and the sky at a low strength (0.2) tinted blue.\n- A soft fill light, 1.5 watts.\n- Chandelier bulbs, 4 watts each.\n- A floor lamp, 12 watts, with a glowing shade. The shade glows by itself and is not baked.\n- A picture light, 3 watts.\n- An LED strip along the ceiling cove, 0.8 watts per metre.",
+  "tech": [
+    {
+      "name": "Blender",
+      "kind": "tool",
+      "plain": "Free 3D software. We use it to build the room and to calculate how light falls in it."
+    },
+    {
+      "name": "Cycles",
+      "kind": "tool",
+      "plain": "Blender's realistic renderer. It follows light the way a camera would see it."
+    }
+  ],
+  "files": [
+    "pipeline/room/build_room.py"
+  ],
+  "tags": [
+    "evening",
+    "lighting",
+    "lamp"
+  ],
+  "meta": {
+    "EVENING": {
+      "sky": 0.2,
+      "fill": 1.5,
+      "chandelierBulb": 4,
+      "floorLamp": 12,
+      "pictureLight": 3,
+      "ledCovePerMetre": 0.8
+    },
+    "glowLampShade": "glow_lamp_shade: emissive and unbaked"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "id": "2026-11-26-pack-the-pictures-and-export-the-room",
+  "date": "2026-11-26",
+  "time": "11:20",
+  "title": "Pack the pictures and export the room",
+  "kind": "sub",
+  "parent": "2026-11-26-morning-bake-light-maps-probe-and-glb",
+  "order": 3,
+  "area": "pipeline",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "A script cleans and packs the pictures, then the room is exported as one small file.",
+  "what": "A script cleans the light maps and packs them for the web, then the room is exported and shrunk into `room_v2.glb`.",
+  "why": "The browser needs small, ready-to-use files, not raw Blender output.",
+  "how": "- A light clean-up removes grain from the pictures.\n- The pictures are stored at a quarter of their real brightness, so bright spots do not get clipped. The web page multiplies the brightness back.\n- 70% of the probe's colour cast is removed.\n- Each light map is put in the file's glow slot, which carries the second set of coordinates.\n- The file is shrunk: pictures resized to 2048 pixels, saved as WebP, and the 3D shapes compressed.",
+  "tech": [
+    {
+      "name": "GLB file",
+      "kind": "tool",
+      "plain": "A compact 3D file format that web pages can load quickly."
+    },
+    {
+      "name": "gltf-transform",
+      "kind": "tool",
+      "plain": "Shrinks 3D files so they load fast."
+    },
+    {
+      "name": "Light maps",
+      "kind": "method",
+      "plain": "Pictures of how bright each surface is, laid over the walls and floor so the browser does not have to calculate light."
+    },
+    {
+      "name": "Python scripts",
+      "kind": "method",
+      "plain": "Small programs that tell Blender what to build and bake, so every step can be repeated."
+    }
+  ],
+  "files": [
+    "pipeline/room/post_bake.py",
+    "pipeline/room/export_room.py",
+    "pipeline/room/optimize_room.sh",
+    "public/assets/room/room_v2.glb",
+    "public/env/room_2k.hdr"
+  ],
+  "tags": [
+    "bake",
+    "day",
+    "pipeline"
+  ],
+  "meta": {
+    "LIGHT_SCALE": 4,
+    "NEUTRALIZE": 0.7,
+    "storedAs": "light / 4 as an sRGB JPEG in the glTF emissive slot on TEXCOORD_1",
+    "viewerIntensity": "lightMapIntensity = 4 * PI * exposure (day exposure 1.46)",
+    "gltfTransform": "4.5.1 (resize 2048, WebP quality 88, meshopt)",
+    "output": "public/assets/room/room_v2.glb, public/env/room_2k.hdr"
+  }
+}

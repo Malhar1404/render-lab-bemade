@@ -1,0 +1,20 @@
+{
+  "id": "2026-11-26-new-fields-command-line-and-saved-layout",
+  "date": "2026-11-26",
+  "time": "17:33",
+  "title": "New fields, command line and saved layout",
+  "kind": "sub",
+  "parent": "2026-11-26-dev-log-evidence-board-and-plain-language",
+  "order": 3,
+  "area": "tooling",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "New entry fields, new command-line flags, and saved card positions.",
+  "what": "New fields (kind, parent, order, follows, links, summary, tech, before and after text), matching command-line flags and form fields, and a small service that saves dragged card positions.",
+  "why": "Part of making the dev log easier to read.",
+  "how": "The store checks the new fields. `npm run log -- --help` lists the flags and `--tree` prints the entry tree. The layout is saved in `devlog/board-layout.json`.",
+  "tags": [
+    "devlog",
+    "board"
+  ]
+}

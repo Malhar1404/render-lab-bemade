@@ -1,0 +1,39 @@
+{
+  "id": "2026-11-26-compare-real-carpets",
+  "date": "2026-11-26",
+  "time": "11:31",
+  "title": "Compare real carpets",
+  "kind": "sub",
+  "parent": "2026-11-26-rug-a-generated-loomed-rug-instead-of-a",
+  "order": 1,
+  "area": "materials",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "We looked at all sixteen Poly Haven carpets, then at three close candidates.",
+  "what": "We looked at all sixteen Poly Haven carpets on spheres, then at three close candidates: Carpet013, Carpet016 and Carpet012. In the end a generated rug was used instead.",
+  "why": "To see whether a photographed carpet could be the rug.",
+  "how": "The pictures show the two comparison sheets. The reasons each candidate was dropped were not written down.",
+  "tech": [
+    {
+      "name": "Poly Haven",
+      "kind": "library",
+      "plain": "A free library of textures and sky pictures that anyone may use."
+    }
+  ],
+  "tags": [
+    "rug",
+    "textures"
+  ],
+  "images": [
+    {
+      "file": "carpet_sheet.jpg",
+      "caption": "All sixteen Poly Haven carpets on spheres",
+      "kind": "screenshot"
+    },
+    {
+      "file": "rug_compare.jpg",
+      "caption": "Three candidates: Carpet013, Carpet016, Carpet012",
+      "kind": "screenshot"
+    }
+  ]
+}

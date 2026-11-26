@@ -1,0 +1,55 @@
+{
+  "id": "2026-11-26-take-the-360-degree-probe",
+  "date": "2026-11-26",
+  "time": "11:10",
+  "title": "Take the 360-degree probe",
+  "kind": "sub",
+  "parent": "2026-11-26-morning-bake-light-maps-probe-and-glb",
+  "order": 2,
+  "area": "pipeline",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "A panorama of the room, taken from the table, lights and reflects in the table and chairs.",
+  "what": "We took a 2048 x 1024 panorama of the room from just above the table, in the middle of the room.",
+  "why": "The table and chairs are lit live, and they need a picture of the room around them to light and reflect from.",
+  "how": "- The panorama is saved in a format the web page understands.\n- We worked out which way it must face so that reflections point the right way. The details are under settings.",
+  "tech": [
+    {
+      "name": "360-degree probe",
+      "kind": "method",
+      "plain": "A panorama of the room taken from the table. It lights and reflects in the table and chairs."
+    },
+    {
+      "name": "HDRI sky picture",
+      "kind": "method",
+      "plain": "A photo that records a huge range of brightness, used as a realistic sky and light source."
+    },
+    {
+      "name": "Cycles",
+      "kind": "tool",
+      "plain": "Blender's realistic renderer. It follows light the way a camera would see it."
+    }
+  ],
+  "files": [
+    "pipeline/room/bake_room.py"
+  ],
+  "tags": [
+    "bake",
+    "day",
+    "probe"
+  ],
+  "meta": {
+    "position": [
+      0,
+      0,
+      0.85
+    ],
+    "cameraRotationDeg": [
+      90,
+      0,
+      -90
+    ],
+    "size": "2048x1024",
+    "orientation": "u = 0.5 is +X; Blender +Y is three.js -Z, which is u = 0.25"
+  }
+}

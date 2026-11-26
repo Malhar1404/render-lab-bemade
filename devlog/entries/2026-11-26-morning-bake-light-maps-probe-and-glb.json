@@ -1,0 +1,84 @@
+{
+  "id": "2026-11-26-morning-bake-light-maps-probe-and-glb",
+  "date": "2026-11-26",
+  "time": "11:00",
+  "title": "Day (morning) bake",
+  "parent": "2026-11-26-topic-lighting-moods",
+  "order": 1,
+  "area": "pipeline",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "We calculated the morning light once in Blender and saved it as pictures for the web page.",
+  "what": "We baked the morning room in Blender without opening its window: the light on every surface became a set of pictures (light maps), plus one 360-degree picture of the room (the probe).\n\nWe packed them for the web page and exported the room as one compact file, `room_v2.glb`.",
+  "why": "Baked light costs nothing while the page runs and looks photo-real. With the probe, the table and chairs only need that one picture to look right in the room.",
+  "how": "1. Blender calculates the light on each surface and saves it as a picture.\n2. Blender takes a 360-degree picture from the middle of the room, 0.85 m up.\n3. A script cleans the pictures and packs them for the web.\n4. The room is exported and shrunk into one small file.\n5. The web page puts the light pictures back on the room.\n\nThe three sub-tasks below show the steps in more detail.",
+  "wrong": "Blender run without a window (the Microsoft Store version) loses its printed messages, ignores environment variables and does not understand Git Bash paths such as `/m/...`.",
+  "fix": "- The scripts write their messages to log files.\n- Settings are passed as script arguments.\n- Paths are written as Windows paths.\n- The bake script stops at the first failure.\n- Blender runs in the background.",
+  "follows": [
+    "2026-11-26-room-built-in-blender-with-build-room-py"
+  ],
+  "tech": [
+    {
+      "name": "Cycles",
+      "kind": "tool",
+      "plain": "Blender's realistic renderer. It follows light the way a camera would see it."
+    },
+    {
+      "name": "Baking",
+      "kind": "method",
+      "plain": "Calculating the light once, in advance, and saving the result as pictures."
+    },
+    {
+      "name": "Light maps",
+      "kind": "method",
+      "plain": "Pictures of how bright each surface is, laid over the walls and floor so the browser does not have to calculate light."
+    },
+    {
+      "name": "360-degree probe",
+      "kind": "method",
+      "plain": "A panorama of the room taken from the table. It lights and reflects in the table and chairs."
+    },
+    {
+      "name": "GLB file",
+      "kind": "tool",
+      "plain": "A compact 3D file format that web pages can load quickly."
+    },
+    {
+      "name": "Python scripts",
+      "kind": "method",
+      "plain": "Small programs that tell Blender what to build and bake, so every step can be repeated."
+    }
+  ],
+  "files": [
+    "pipeline/room/bake_room.py",
+    "pipeline/room/post_bake.py",
+    "pipeline/room/export_room.py",
+    "pipeline/room/optimize_room.sh",
+    "pipeline/room/run_bake.sh",
+    "public/assets/room/room_v2.glb",
+    "public/env/room_2k.hdr"
+  ],
+  "tags": [
+    "bake",
+    "day",
+    "morning",
+    "pipeline"
+  ],
+  "images": [
+    {
+      "file": "mood_morning_b_graded.jpg",
+      "caption": "Morning mood, camera b (colour-matched Cycles preview)",
+      "kind": "render"
+    }
+  ],
+  "meta": {
+    "backfilled": true,
+    "source": "CONTEXT.md and git log",
+    "note": "Written afterwards; the time only orders the timeline.",
+    "mood": "day",
+    "lightScale": 4,
+    "neutralize": 0.7,
+    "exposure": 1.46,
+    "probe": "2048x1024 at (0, 0, 0.85)"
+  }
+}

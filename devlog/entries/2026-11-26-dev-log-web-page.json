@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-26-dev-log-web-page",
+  "date": "2026-11-26",
+  "time": "16:20",
+  "title": "The web page",
+  "kind": "sub",
+  "parent": "2026-11-26-dev-log-system",
+  "order": 3,
+  "area": "tooling",
+  "outcome": "partial",
+  "author": "claude",
+  "summary": "A timeline of entries with search, filters, a detail page, an edit form and light and dark themes.",
+  "what": "A page with a timeline grouped by date, search, filters by area, outcome and tag, a detail page for each entry, an image viewer, a before/after slider, an edit form with drag-and-drop and paste, and light and dark themes.",
+  "why": "So the log is pleasant to read and easy to add to.",
+  "how": "Written in React in `src/devlog/`. Text fields use a small, safe renderer for light markdown.",
+  "wrong": "The renderer does not support nested bullets: indented bullets show at the same level.",
+  "fix": "Entries avoid nested bullets.",
+  "next": "- Check the lab's snapshot button and the form's paste and drag-and-drop in a real browser session. Only the timeline and detail pages were screenshotted headlessly.\n- Nested bullets in the renderer, if they are wanted.",
+  "tech": [
+    {
+      "name": "React",
+      "kind": "library",
+      "plain": "The toolkit that builds the lab and dev log pages from small parts."
+    },
+    {
+      "name": "TypeScript",
+      "kind": "tool",
+      "plain": "A stricter form of JavaScript that catches mistakes before the code runs."
+    }
+  ],
+  "files": [
+    "src/devlog/"
+  ],
+  "tags": [
+    "devlog",
+    "ui"
+  ]
+}

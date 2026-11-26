@@ -1,0 +1,35 @@
+{
+  "id": "2026-11-26-dev-log-storage-and-command-line",
+  "date": "2026-11-26",
+  "time": "15:56",
+  "title": "Storage and command line",
+  "kind": "sub",
+  "parent": "2026-11-26-dev-log-system",
+  "order": 1,
+  "area": "tooling",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "Each entry is one file, and a small command adds entries without the dev server.",
+  "what": "Each entry is one file, `devlog/entries/<id>.json`, and its images go in `devlog/images/<id>/`. A small tool (`npm run log`) adds entries from the command line, without the dev server.",
+  "why": "Plain files are easy to read, search and keep in git, and Claude can write them directly.",
+  "how": "- One plain Node file (`store.mjs`) checks, saves, lists and deletes entries.\n- Another (`ids.mjs`) makes ids.\n- Both the command line and the dev server use them, so entries are written the same way everywhere.\n- The command line also takes `--json`, `--update` and `--meta`.",
+  "wrong": "The first ids were cut in the middle of words.",
+  "fix": "Ids are now cut at a word boundary.",
+  "tech": [
+    {
+      "name": "Node.js",
+      "kind": "tool",
+      "plain": "Runs small command-line programs, such as the dev log tool."
+    }
+  ],
+  "files": [
+    "devlog/store.mjs",
+    "devlog/store.d.mts",
+    "devlog/ids.mjs",
+    "devlog/add.mjs"
+  ],
+  "tags": [
+    "devlog",
+    "tooling"
+  ]
+}

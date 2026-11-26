@@ -1,0 +1,49 @@
+{
+  "id": "realistic-day-bake",
+  "title": "Realistic daylight room",
+  "status": "active",
+  "updated": "2026-11-26",
+  "goal": "Make the room look like a real morning photo: lit only by the sun and the sky through the glass wall, with corners and the far wall naturally darker, and no smudgy \"crayon\" look on the walls, floor or plants.",
+  "target": [
+    { "file": "target_corner.jpg", "caption": "Target: the room in Blender with the chosen daylight (sun 0.65, sky 4.5)" },
+    { "file": "target_far_wall.jpg", "caption": "Target: the new wall opposite the window (painting and wall lights; the door here is the old walnut, now changed to light oak)" }
+  ],
+  "decisions": [
+    { "text": "Daylight only: sun plus the sky through the glass. No chandelier, no floor lamp, no hidden ceiling light.", "images": [
+      { "file": "option_sun_only_corner.jpg", "caption": "Rejected: sun only (the garden turns black)" },
+      { "file": "option_sky18_corner.jpg", "caption": "Tried: sky 1.8 (far wall too dark)" },
+      { "file": "option_sky45_corner.jpg", "caption": "Tried: sky 4.5 with a stronger sun" }
+    ] },
+    { "text": "Sun 0.65 and sky 4.5: softer sun stripes, and the far wall lit by the sky." },
+    { "text": "New wall opposite the window: light oak door, a large painting and two brass wall lights (off by day)." },
+    { "text": "Light-map sizes by need, not 2K everywhere: floor 4096; rug, window wall and credenza wall 2048; other walls, ceiling, credenza, plants and curtains 1024; small things 512 or 256." },
+    { "text": "Clean the bake noise with Blender's own denoiser (OIDN) instead of the filter that smeared it into crayon blotches." },
+    { "text": "Bake one item at a time and check each before the next." }
+  ],
+  "steps": [
+    { "id": "lighting", "title": "Set the daylight in Blender and review", "status": "done" },
+    { "id": "front-wall", "title": "Add the door, painting and wall lights to the empty wall", "status": "done" },
+    { "id": "denoise", "title": "Set up the clean denoise step and test it", "status": "done" },
+    { "id": "floor", "title": "Bake the floor (4096)", "status": "done", "images": [
+      { "file": "floor_lm_full_denoised.jpg", "caption": "Floor light map: sun patch and window-frame shadows" },
+      { "file": "floor_lm_crop_before_after.jpg", "caption": "Close-up: raw bake (left), cleaned (right)" }
+    ] },
+    { "id": "rug", "title": "Bake the rug (2048)", "status": "done", "images": [
+      { "file": "rug_lm_full_denoised.jpg", "caption": "Rug light map: sun stripes across it" },
+      { "file": "rug_lm_crop_before_after.jpg", "caption": "Close-up: raw bake (left), cleaned (right)" }
+    ] },
+    { "id": "wall-window", "title": "Bake the window wall (2048)", "status": "done", "images": [
+      { "file": "wall_window_lm_full_denoised.jpg", "caption": "Window wall light map (the black area is unused space in the map)" },
+      { "file": "wall_window_lm_crop_before_after.jpg", "caption": "Close-up of a shaded part: raw bake (left), cleaned (right)" }
+    ] },
+    { "id": "wall-right", "title": "Bake the credenza wall (2048)", "status": "next" },
+    { "id": "walls-soft", "title": "Bake the far wall, side wall and ceiling (1024 each)", "status": "todo" },
+    { "id": "furniture", "title": "Bake the credenza and curtains (1024)", "status": "todo" },
+    { "id": "plants", "title": "Bake the plant, fig and pots (1024, leaves given fair space)", "status": "todo" },
+    { "id": "small", "title": "Bake the door, painting, art, window frames, terrace, lamp and wall lights", "status": "todo" },
+    { "id": "probe", "title": "Render the 360 reflection photo from the table", "status": "todo" },
+    { "id": "export", "title": "Export without lossy compression, keeping detail in dark areas", "status": "todo" },
+    { "id": "app", "title": "Check in the lab, match the look (AgX tone mapping, exposure), compare with the target", "status": "todo" },
+    { "id": "log", "title": "Write one dev log entry for all of this, with the images", "status": "todo" }
+  ]
+}

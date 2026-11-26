@@ -1,0 +1,27 @@
+{
+  "id": "2026-11-26-the-board",
+  "date": "2026-11-26",
+  "time": "17:31",
+  "title": "The board",
+  "kind": "sub",
+  "parent": "2026-11-26-dev-log-evidence-board-and-plain-language",
+  "order": 1,
+  "area": "tooling",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "Cork background, pinned cards, arrows and red strings, with zoom, pan, minimap, search and filters.",
+  "what": "The board page: cards for topics, steps and sub-tasks, drawn on cork, with a key that explains the lines.",
+  "why": "Part of making the dev log easier to read.",
+  "how": "Zoom, pan, a minimap, a Fit view button, search, and filters for outcome, area and tag. Light and dark themes, with a darker cork in dark mode.",
+  "tech": [
+    {
+      "name": "React Flow",
+      "kind": "library",
+      "plain": "Draws the board and lets you zoom, pan and drag the cards."
+    }
+  ],
+  "tags": [
+    "devlog",
+    "board"
+  ]
+}

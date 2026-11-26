@@ -1,0 +1,53 @@
+{
+  "id": "2026-11-26-dev-log-service-in-the-dev-server",
+  "date": "2026-11-26",
+  "time": "16:05",
+  "title": "Service inside the dev server",
+  "kind": "sub",
+  "parent": "2026-11-26-dev-log-system",
+  "order": 2,
+  "area": "tooling",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "While the dev server runs, the page can save entries and images through a small service.",
+  "what": "While `npm run dev` runs, the page can save entries and images through a small service. It does not exist in the release build.",
+  "why": "The page needs somewhere to save to, but the release build should contain no dev log data.",
+  "how": "- The service can list, save and delete entries, and upload and serve images. It blocks path tricks and never overwrites an uploaded image.\n- `devlog.html` is not part of the build, so `vite build` produces only the app.",
+  "wrong": "- `@types/node` is not installed and no dependencies could be added, so the code check could not understand Node's file tools in the plugin.\n- Vite's request type is an empty stub without Node types, so the first version did not pass the code check.\n- `npx vite build` run from Git Bash (with the lower-case drive letter `m:`) fails with an `html-proxy` error on `index.html`. It happens before any dev log code is involved.",
+  "fix": "- The file work lives in plain `.mjs` files (with a `.d.mts` for types), and the `.ts` plugin only routes requests, using small local types.\n- The build was verified from a PowerShell session at `M:\\projects\\BeMade\\render-lab`.",
+  "tech": [
+    {
+      "name": "Vite",
+      "kind": "tool",
+      "plain": "Runs the lab in the browser while we work and builds it for release."
+    },
+    {
+      "name": "TypeScript",
+      "kind": "tool",
+      "plain": "A stricter form of JavaScript that catches mistakes before the code runs."
+    },
+    {
+      "name": "Node.js",
+      "kind": "tool",
+      "plain": "Runs small command-line programs, such as the dev log tool."
+    }
+  ],
+  "files": [
+    "devlog/vitePlugin.ts",
+    "vite.config.ts",
+    "tsconfig.json"
+  ],
+  "tags": [
+    "devlog",
+    "vite-plugin"
+  ],
+  "meta": {
+    "endpoints": [
+      "GET/POST /api/devlog/entries",
+      "DELETE /api/devlog/entries/:id",
+      "POST /api/devlog/images/:id?name=",
+      "GET /devlog-images/<id>/<file>"
+    ],
+    "applyOnly": "serve"
+  }
+}

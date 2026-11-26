@@ -1,0 +1,62 @@
+{
+  "id": "2026-11-26-rug-a-generated-loomed-rug-instead-of-a",
+  "date": "2026-11-26",
+  "time": "11:30",
+  "title": "The rug",
+  "parent": "2026-11-26-topic-room",
+  "order": 3,
+  "area": "materials",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "We made the rug from a generated wool texture, after comparing photographs of real carpets.",
+  "what": "The rug is a texture we generated: a hand-loomed look in plain, mixed grey-beige wool. It repeats seamlessly (a 1 m square at 2048 pixels), with a fuzz layer and an edge fringe on top.",
+  "why": "The rug has to repeat without visible seams at rug size, in a plain heathered greige wool whose colour we control. We first compared photographed carpets from Poly Haven.",
+  "how": "- We compared the sixteen Poly Haven carpets, then three close candidates.\n- A script can generate the rug in three ways; the hand-loomed version is the one the room uses.\n- A second script makes loose fibres for the fuzz and the fringe.\n- The rug is 5 m by 3.5 m, and its light map uses a flat top-down mapping.\n- Why the earlier attempts were dropped was not written down; the pictures are what is left of the comparison.",
+  "tech": [
+    {
+      "name": "Poly Haven",
+      "kind": "library",
+      "plain": "A free library of textures and sky pictures that anyone may use."
+    },
+    {
+      "name": "Seamless tile",
+      "kind": "method",
+      "plain": "A small picture made to repeat across a big surface with no visible seams."
+    },
+    {
+      "name": "Python scripts",
+      "kind": "method",
+      "plain": "Small programs that tell Blender what to build and bake, so every step can be repeated."
+    }
+  ],
+  "files": [
+    "pipeline/room/prepare_textures.py",
+    "pipeline/room/build_room.py"
+  ],
+  "tags": [
+    "rug",
+    "textures"
+  ],
+  "images": [
+    {
+      "file": "rug_full.jpg",
+      "caption": "The generated rug, full tile",
+      "kind": "render"
+    },
+    {
+      "file": "rug_detail.jpg",
+      "caption": "The generated rug, close detail",
+      "kind": "render"
+    }
+  ],
+  "meta": {
+    "backfilled": true,
+    "source": "CONTEXT.md and git log",
+    "note": "Written afterwards; the time only orders the timeline.",
+    "tile": "2048 px, 1 m",
+    "rugHalfSize": [
+      2.5,
+      1.75
+    ]
+  }
+}

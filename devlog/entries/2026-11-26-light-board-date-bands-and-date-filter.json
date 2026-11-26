@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-26-light-board-date-bands-and-date-filter",
+  "date": "2026-11-26",
+  "time": "16:49",
+  "title": "Light board, date bands and date filter",
+  "kind": "sub",
+  "parent": "2026-11-26-dev-log-evidence-board-and-plain-language",
+  "area": "tooling",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "Light grey board, one band per day so it is easy to see what was done when, a date filter, and no minimap.",
+  "what": "Board background is plain light grey. Under the topic headers each day is its own horizontal band with a line and a big date label. Toolbar has Today / Last 7 days / All dates chips and From-To pickers; cards outside the range fade. Minimap and the React Flow credit link removed.",
+  "why": "The user found the dark board hard to read and wanted to separate work by date.",
+  "how": "model.ts now places steps by hand into date bands under the dagre-placed headers; bands are background nodes. filters.ts gained from/to. Saved card positions got a version number so old ones are ignored.",
+  "beforeText": "Dark board, no dates on the board, minimap in the corner.",
+  "afterText": "Light board, one band per day, date filter, no minimap.",
+  "wrong": "The store was stripping the new layout version field on load and save; fixed in devlog/store.mjs.",
+  "files": [
+    "src/devlog/board/model.ts",
+    "src/devlog/board/Board.tsx",
+    "src/devlog/board/Cards.tsx",
+    "src/devlog/board/board.css",
+    "src/devlog/filters.ts",
+    "devlog/store.mjs"
+  ],
+  "tags": [
+    "devlog",
+    "ui"
+  ],
+  "images": [
+    {
+      "file": "board-fake.png",
+      "caption": "Test run with dates shifted to show four day bands",
+      "kind": "screenshot"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "id": "2026-11-26-hook-the-evening-mood-into-the-app",
+  "date": "2026-11-26",
+  "time": "15:00",
+  "title": "Hook the evening mood into the app",
+  "kind": "sub",
+  "parent": "2026-11-26-evening-mood-late-dusk-with-lamps-baked-and-wired",
+  "order": 5,
+  "area": "viewer",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "The lab's Evening button now shows the evening room.",
+  "what": "We made the lab's Evening button show the evening room.",
+  "why": "The baked evening files are only useful if the lab can show them.",
+  "how": "- Each mood now has its own light-brightness setting. Evening uses a room exposure of 1.1 and a table reflection strength of 1.65.\n- The room's light-map strength is worked out from that setting.\n- The sliders reset when you switch moods.",
+  "wrong": "A small bug: the code that updates the room's light maps did not watch the new setting, so switching mood would not have updated them.",
+  "fix": "The new setting (`lightScale`) was added to what that code watches.",
+  "links": [
+    {
+      "id": "2026-11-26-bake-and-measure-the-evening-room",
+      "label": "uses"
+    }
+  ],
+  "tech": [
+    {
+      "name": "React",
+      "kind": "library",
+      "plain": "The toolkit that builds the lab and dev log pages from small parts."
+    },
+    {
+      "name": "three.js",
+      "kind": "library",
+      "plain": "Draws 3D scenes in the web browser."
+    },
+    {
+      "name": "leva",
+      "kind": "library",
+      "plain": "Draws the small control panel with sliders in the lab."
+    }
+  ],
+  "files": [
+    "src/config/moods.ts",
+    "src/scene/Room.tsx",
+    "src/App.tsx"
+  ],
+  "tags": [
+    "evening",
+    "mood"
+  ],
+  "meta": {
+    "lightMapIntensity": "lightScale * PI * exposure",
+    "roomExposure": 1.1,
+    "tableEnv": 1.65
+  }
+}

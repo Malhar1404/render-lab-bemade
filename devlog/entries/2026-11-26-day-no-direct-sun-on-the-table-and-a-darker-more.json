@@ -1,0 +1,19 @@
+{
+  "id": "2026-11-26-day-no-direct-sun-on-the-table-and-a-darker-more",
+  "date": "2026-11-26",
+  "time": "17:39",
+  "title": "Day: no direct sun on the table, and a darker, more natural day room",
+  "kind": "sub",
+  "parent": "2026-11-26-live-lamps-sun-floor-shadows-and-a-mirror-in-the",
+  "area": "lighting",
+  "outcome": "open",
+  "author": "claude",
+  "what": "The floor shadows by day ended in a hard straight line. The day room also looked evenly bright, as if the lamps were on, with no darker corners away from the window.",
+  "why": "The live sun assumed sunlight lands on the table, but the baked floor shows the sun only reaches a strip by the window, so the shadows were cut at the edge of a sun patch that isn't really there. The day bake had the chandelier on (10 bulbs) and a strong hidden ceiling fill light, which flattened the room.",
+  "how": "By day the live light is now a soft light from the window side with no patch edge, so shadows blend out. For the next day bake the chandelier is off and the hidden fill is cut from 6 W to 1 W (build_room.py), so light falls off naturally into the corners. Needs the day rebake to take effect.",
+  "tags": [
+    "day",
+    "shadows",
+    "bake"
+  ]
+}

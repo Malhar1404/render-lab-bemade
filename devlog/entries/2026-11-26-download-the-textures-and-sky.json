@@ -1,0 +1,35 @@
+{
+  "id": "2026-11-26-download-the-textures-and-sky",
+  "date": "2026-11-26",
+  "time": "10:01",
+  "title": "Download the textures and sky",
+  "kind": "sub",
+  "parent": "2026-11-26-garden-sky-and-graded-textures",
+  "order": 1,
+  "area": "pipeline",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "A script downloads the free textures and the sky picture.",
+  "what": "A script (`fetch_assets.py`) downloads the free Poly Haven textures and the sky picture.",
+  "why": "Free, properly licensed pictures save us from making every surface by hand.",
+  "how": "One script fetches everything into a work folder that is not saved in git.",
+  "tech": [
+    {
+      "name": "Poly Haven",
+      "kind": "library",
+      "plain": "A free library of textures and sky pictures that anyone may use."
+    },
+    {
+      "name": "Python scripts",
+      "kind": "method",
+      "plain": "Small programs that tell Blender what to build and bake, so every step can be repeated."
+    }
+  ],
+  "files": [
+    "pipeline/room/fetch_assets.py"
+  ],
+  "tags": [
+    "textures",
+    "pipeline"
+  ]
+}

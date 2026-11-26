@@ -1,0 +1,64 @@
+{
+  "id": "2026-11-26-dev-log-system",
+  "date": "2026-11-26",
+  "time": "15:55",
+  "title": "The dev log",
+  "parent": "2026-11-26-topic-tools",
+  "order": 1,
+  "area": "tooling",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "We added this dev log: a record of what we did, why, how and what went wrong, with pictures.",
+  "what": "We added a dev log to the project: a set of entries with images, a command-line tool that Claude and the bake script write through, and a web page at `/devlog.html`.",
+  "why": "We want a proper record of what we did, why, how and what went wrong, with pictures, that lasts across chats. The folder `pipeline/room/out/` is not saved in git, so images have to be copied into the log.\n\nClaude writes most entries; the user can add and edit them in the page.",
+  "how": "The dev log has five parts, shown as sub-tasks: storage and the command line, the service inside the dev server, the web page, links from the lab and the bake script, and filling in the earlier work.",
+  "tech": [
+    {
+      "name": "Node.js",
+      "kind": "tool",
+      "plain": "Runs small command-line programs, such as the dev log tool."
+    },
+    {
+      "name": "Vite",
+      "kind": "tool",
+      "plain": "Runs the lab in the browser while we work and builds it for release."
+    },
+    {
+      "name": "React",
+      "kind": "library",
+      "plain": "The toolkit that builds the lab and dev log pages from small parts."
+    },
+    {
+      "name": "TypeScript",
+      "kind": "tool",
+      "plain": "A stricter form of JavaScript that catches mistakes before the code runs."
+    }
+  ],
+  "files": [
+    "devlog/store.mjs",
+    "devlog/store.d.mts",
+    "devlog/ids.mjs",
+    "devlog/vitePlugin.ts",
+    "devlog/add.mjs",
+    "devlog.html",
+    "src/devlog/",
+    "src/App.tsx",
+    "src/index.css",
+    "pipeline/room/post_bake.py",
+    "pipeline/room/run_bake.sh",
+    "vite.config.ts",
+    "tsconfig.json",
+    "package.json",
+    "CONTEXT.md"
+  ],
+  "tags": [
+    "devlog",
+    "tooling",
+    "vite-plugin"
+  ],
+  "meta": {
+    "entriesBackfilled": 13,
+    "port": 5180,
+    "newDependencies": 0
+  }
+}

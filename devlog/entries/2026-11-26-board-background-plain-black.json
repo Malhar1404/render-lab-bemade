@@ -1,0 +1,25 @@
+{
+  "id": "2026-11-26-board-background-plain-black",
+  "date": "2026-11-26",
+  "time": "16:40",
+  "title": "Board background: plain black",
+  "kind": "sub",
+  "parent": "2026-11-26-dev-log-evidence-board-and-plain-language",
+  "area": "tooling",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "Swapped the cork texture for a plain black board so cards are easier to read.",
+  "what": "Replaced the cork background with a flat black board, and made the arrows and strings light so they show on it.",
+  "why": "The cork texture was busy and made the cards hard to read.",
+  "how": "Removed the SVG noise layers and shadow from board.css, set one dark colour, and used light line colours in both themes.",
+  "beforeText": "Brown cork with noise texture; dark arrows.",
+  "afterText": "Flat black board; white and light-blue arrows, red strings.",
+  "files": [
+    "src/devlog/board/board.css",
+    "src/devlog/board/Board.tsx"
+  ],
+  "tags": [
+    "devlog",
+    "ui"
+  ]
+}

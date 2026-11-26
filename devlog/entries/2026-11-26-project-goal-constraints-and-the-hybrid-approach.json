@@ -1,0 +1,20 @@
+{
+  "id": "2026-11-26-project-goal-constraints-and-the-hybrid-approach",
+  "date": "2026-11-26",
+  "time": "09:00",
+  "title": "The goal: a photo-real room for the table",
+  "parent": "2026-11-26-topic-setup-and-approach",
+  "order": 1,
+  "area": "other",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "We set the goal: the table should look like a photograph in its room, using real calculated light.",
+  "what": "We set the goal: a photo-real picture of the BeMade table in its room, matching a set of AI-made reference images.\n\nThe images show a daylight dining room with a glass wall onto a garden, an oak floor, a wool rug, a dark walnut sideboard (credenza) with a marble top, a glass-globe chandelier and a fiddle-leaf fig.",
+  "why": "The configurator's table has to look like a photograph in its room, not like a game scene.\n\nThe rules came from the user:\n- Web configurator only, built first for a desktop PC with a graphics card.\n- No separate render server.\n- One room only.\n- Realism has to come from properly calculated light, with no AI enhancement.\n- We build the assets ourselves.\n- It has to be production quality.",
+  "how": "We agreed a plan that splits the work between a fast live view and light that is calculated in advance. It is described in the sub-task below.",
+  "next": "- Try a live-calculating light prototype later.\n- Move the results back into the main configurator.",
+  "tags": [
+    "planning",
+    "goal"
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "id": "2026-11-26-evening-mood-late-dusk-with-lamps-baked-and-wired",
+  "date": "2026-11-26",
+  "time": "14:22",
+  "title": "Evening mood: late dusk with lamps",
+  "parent": "2026-11-26-topic-lighting-moods",
+  "order": 3,
+  "area": "lighting",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "We built, baked and connected an evening mood with lamps and a dusky sky, and the lab's Evening button now shows it.",
+  "what": "We built an evening mood: late dusk with artificial lighting. It is baked, and the lab's Evening button now shows it.\n\nThe files `room_evening.glb` and `room_evening_2k.hdr` are in `public/`.",
+  "why": "The user wanted an evening mood with lamps that reads properly but stays realistic:\n- Not over-bright.\n- Believable shadows.\n- It has to work in the browser, with baked light maps and a probe like the day mood.",
+  "how": "It reuses the day pipeline with a `mood=evening` setting, so the evening files have their own names and the day files are untouched. To run it again: `sh pipeline/room/run_evening.sh [samples]`.\n\nThe five sub-tasks show the steps: choose the lights, add fixtures, fix three bugs, bake and measure, and connect it to the app.",
+  "beforeText": "The day probe, before the new fixtures were added.",
+  "afterText": "The evening probe: lamps, the cove light, the picture light and the dusk window.",
+  "next": "- The day room needs a rebake to get the new fixtures (the cove ledge and the picture-light fixtures).\n- A separate key light for each mood.\n- Chandelier light on the table in three.js.",
+  "follows": [
+    "2026-11-26-morning-bake-light-maps-probe-and-glb",
+    "2026-11-26-room-built-in-blender-with-build-room-py"
+  ],
+  "tech": [
+    {
+      "name": "Blender",
+      "kind": "tool",
+      "plain": "Free 3D software. We use it to build the room and to calculate how light falls in it."
+    },
+    {
+      "name": "Cycles",
+      "kind": "tool",
+      "plain": "Blender's realistic renderer. It follows light the way a camera would see it."
+    },
+    {
+      "name": "Baking",
+      "kind": "method",
+      "plain": "Calculating the light once, in advance, and saving the result as pictures."
+    },
+    {
+      "name": "Light maps",
+      "kind": "method",
+      "plain": "Pictures of how bright each surface is, laid over the walls and floor so the browser does not have to calculate light."
+    },
+    {
+      "name": "360-degree probe",
+      "kind": "method",
+      "plain": "A panorama of the room taken from the table. It lights and reflects in the table and chairs."
+    }
+  ],
+  "files": [
+    "pipeline/room/build_room.py",
+    "pipeline/room/bake_room.py",
+    "pipeline/room/export_room.py",
+    "pipeline/room/post_bake.py",
+    "pipeline/room/optimize_room.sh",
+    "pipeline/room/run_bake.sh",
+    "pipeline/room/run_evening.sh",
+    "src/config/moods.ts",
+    "src/scene/Room.tsx",
+    "src/App.tsx",
+    "public/assets/room/room_evening.glb",
+    "public/env/room_evening_2k.hdr"
+  ],
+  "tags": [
+    "evening",
+    "bake",
+    "lighting",
+    "cove",
+    "lamp",
+    "mood"
+  ],
+  "images": [
+    {
+      "file": "probe_day_preview.jpg",
+      "caption": "Day probe (before the new fixtures), same tone mapping",
+      "kind": "before"
+    },
+    {
+      "file": "probe_evening_preview.jpg",
+      "caption": "Evening probe: lamps, cove, picture light, dusk window",
+      "kind": "after"
+    }
+  ],
+  "meta": {
+    "mood": "evening",
+    "samples": 1024,
+    "lightScale": 2,
+    "neutralize": 0.35,
+    "roomExposure": 1.1,
+    "tableEnv": 1.65,
+    "glbMB": 11.6,
+    "rawLightVsDay": {
+      "floor": 0.69,
+      "walls": "0.83-0.91",
+      "ceiling": 0.96
+    },
+    "lampStemP995": 3.61,
+    "probeMeanBGR": {
+      "evening": [
+        0.107,
+        0.151,
+        0.206
+      ],
+      "day": [
+        0.243,
+        0.273,
+        0.304
+      ]
+    },
+    "watts": {
+      "fill": 1.5,
+      "chandelierBulb": 4,
+      "floorLamp": 12,
+      "pictureLight": 3,
+      "ledCovePerMetre": 0.8
+    }
+  }
+}

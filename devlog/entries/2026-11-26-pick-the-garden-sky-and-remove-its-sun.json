@@ -1,0 +1,42 @@
+{
+  "id": "2026-11-26-pick-the-garden-sky-and-remove-its-sun",
+  "date": "2026-11-26",
+  "time": "10:10",
+  "title": "Pick the garden sky and remove its sun",
+  "kind": "sub",
+  "parent": "2026-11-26-garden-sky-and-graded-textures",
+  "order": 2,
+  "area": "pipeline",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "We compared garden skies, chose one, and took the sun out of it.",
+  "what": "We compared several garden sky pictures, chose `suburban_garden`, and removed its sun.",
+  "why": "Blender adds its own sun at the right angle and strength, so the sky picture must not already contain one.",
+  "how": "A script prepares the sky at four sizes (8k, 4k, 2k, 1k) and writes a settings file. The contact sheet shows the sky pictures we compared.",
+  "tech": [
+    {
+      "name": "HDRI sky picture",
+      "kind": "method",
+      "plain": "A photo that records a huge range of brightness, used as a realistic sky and light source."
+    },
+    {
+      "name": "Python scripts",
+      "kind": "method",
+      "plain": "Small programs that tell Blender what to build and bake, so every step can be repeated."
+    }
+  ],
+  "files": [
+    "pipeline/room/prepare_env.py"
+  ],
+  "tags": [
+    "hdri",
+    "pipeline"
+  ],
+  "images": [
+    {
+      "file": "hdri_sheet.jpg",
+      "caption": "Candidate garden skies, side by side",
+      "kind": "screenshot"
+    }
+  ]
+}

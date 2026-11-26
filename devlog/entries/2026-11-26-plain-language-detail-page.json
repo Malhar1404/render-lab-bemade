@@ -1,0 +1,20 @@
+{
+  "id": "2026-11-26-plain-language-detail-page",
+  "date": "2026-11-26",
+  "time": "17:32",
+  "title": "Plain-language detail page",
+  "kind": "sub",
+  "parent": "2026-11-26-dev-log-evidence-board-and-plain-language",
+  "order": 2,
+  "area": "tooling",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "Separate sections: one line, what/why/how, before and after, problems, tech cards, related and files.",
+  "what": "The detail page was rebuilt in separate sections, and the same page opens as a side panel on the board.",
+  "why": "Part of making the dev log easier to read.",
+  "how": "Tech cards, red and green problem and fix boxes, clickable related entries, and a collapsed section for files and settings.",
+  "tags": [
+    "devlog",
+    "board"
+  ]
+}

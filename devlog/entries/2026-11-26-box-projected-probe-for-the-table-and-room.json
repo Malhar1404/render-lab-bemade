@@ -1,0 +1,65 @@
+{
+  "id": "2026-11-26-box-projected-probe-for-the-table-and-room",
+  "date": "2026-11-26",
+  "time": "13:10",
+  "title": "Reflections that line up with the room",
+  "parent": "2026-11-26-topic-viewer",
+  "order": 3,
+  "area": "viewer",
+  "outcome": "partial",
+  "author": "claude",
+  "summary": "We made the table's and the glossy parts' reflections line up with the real room, using box projection.",
+  "what": "We added a corrected (box-projected) probe, so reflections on the table and on the room's glossy parts line up with the real room.",
+  "why": "A plain environment picture reflects as if the room were infinitely far away. The probe was taken inside an 8.6 m by 3.2 m by 6.2 m room, and box projection puts the reflections where they belong.",
+  "how": "- A helper adds the correction to the materials without removing the configurator's own patches. The probe can be in a different place than the middle of the box.\n- A shared on/off switch (the box projection slider) lets us compare.\n- It works in three.js r176, which is why we did not downgrade three.js.",
+  "next": "The user compares box projection off and on.",
+  "follows": [
+    "2026-11-26-take-the-360-degree-probe"
+  ],
+  "tech": [
+    {
+      "name": "Box projection",
+      "kind": "method",
+      "plain": "A trick that makes reflections line up with the real walls instead of looking infinitely far away."
+    },
+    {
+      "name": "three.js",
+      "kind": "library",
+      "plain": "Draws 3D scenes in the web browser."
+    },
+    {
+      "name": "360-degree probe",
+      "kind": "method",
+      "plain": "A panorama of the room taken from the table. It lights and reflects in the table and chairs."
+    }
+  ],
+  "files": [
+    "src/core/boxProjection.ts",
+    "src/config/moods.ts",
+    "src/main.tsx"
+  ],
+  "tags": [
+    "reflections",
+    "three.js"
+  ],
+  "meta": {
+    "backfilled": true,
+    "source": "CONTEXT.md and git log",
+    "note": "Written afterwards; the time only orders the timeline.",
+    "boxCentre": [
+      0,
+      1.6,
+      0
+    ],
+    "boxSize": [
+      8.6,
+      3.2,
+      6.2
+    ],
+    "probePosition": [
+      0,
+      0.85,
+      0
+    ]
+  }
+}

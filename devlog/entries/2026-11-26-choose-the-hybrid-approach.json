@@ -1,0 +1,53 @@
+{
+  "id": "2026-11-26-choose-the-hybrid-approach",
+  "date": "2026-11-26",
+  "time": "09:10",
+  "title": "Choose the hybrid approach",
+  "kind": "sub",
+  "parent": "2026-11-26-project-goal-constraints-and-the-hybrid-approach",
+  "order": 1,
+  "area": "other",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "A fast live view while people interact, with the room's light calculated in advance.",
+  "what": "We agreed a two-part plan: a fast live view for moving around, and photo-quality light calculated ahead of time.",
+  "why": "Light that is calculated in advance costs nothing while the page runs, and still looks photo-real.",
+  "how": "- While the visitor moves around, a fast live view draws the scene.\n- Later, a path tracer will refine the picture to photo quality within one to three seconds, once the view stops moving.\n- The room's light is calculated in advance in Blender and saved as pictures, plus one 360-degree picture of the room. The table and chairs are lit live from that 360-degree picture.",
+  "links": [
+    {
+      "id": "2026-11-26-morning-bake-light-maps-probe-and-glb",
+      "label": "led to"
+    }
+  ],
+  "tech": [
+    {
+      "name": "three.js",
+      "kind": "library",
+      "plain": "Draws 3D scenes in the web browser."
+    },
+    {
+      "name": "Baking",
+      "kind": "method",
+      "plain": "Calculating the light once, in advance, and saving the result as pictures."
+    },
+    {
+      "name": "360-degree probe",
+      "kind": "method",
+      "plain": "A panorama of the room taken from the table. It lights and reflects in the table and chairs."
+    },
+    {
+      "name": "three-gpu-pathtracer",
+      "kind": "library",
+      "plain": "Planned for later: it refines the picture to photo quality when the view stops moving."
+    },
+    {
+      "name": "oidn-web",
+      "kind": "library",
+      "plain": "Planned for later: it removes grain from a path-traced picture."
+    }
+  ],
+  "tags": [
+    "planning",
+    "decision"
+  ]
+}

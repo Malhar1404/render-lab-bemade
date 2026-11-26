@@ -1,0 +1,35 @@
+{
+  "id": "2026-11-26-render-the-mood-previews",
+  "date": "2026-11-26",
+  "time": "13:21",
+  "title": "Render the mood previews",
+  "kind": "sub",
+  "parent": "2026-11-26-mood-grading-tests-morning-and-afternoon-previews",
+  "order": 1,
+  "area": "lighting",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "A script renders the room in the morning and afternoon moods from four cameras.",
+  "what": "A script renders Blender previews of the morning and afternoon moods from four cameras: a, b, c and r.",
+  "why": "Using the same cameras for each mood makes the moods easy to compare.",
+  "how": "The script is `preview_room.py`.",
+  "tech": [
+    {
+      "name": "Cycles",
+      "kind": "tool",
+      "plain": "Blender's realistic renderer. It follows light the way a camera would see it."
+    },
+    {
+      "name": "Python scripts",
+      "kind": "method",
+      "plain": "Small programs that tell Blender what to build and bake, so every step can be repeated."
+    }
+  ],
+  "files": [
+    "pipeline/room/preview_room.py"
+  ],
+  "tags": [
+    "mood",
+    "previews"
+  ]
+}

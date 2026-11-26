@@ -1,0 +1,30 @@
+{
+  "id": "2026-11-26-colour-correct-the-textures",
+  "date": "2026-11-26",
+  "time": "10:20",
+  "title": "Colour-correct the textures",
+  "kind": "sub",
+  "parent": "2026-11-26-garden-sky-and-graded-textures",
+  "order": 3,
+  "area": "pipeline",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "The oak, paint, walnut, linen, marble and other textures were colour-matched to the reference.",
+  "what": "A script colour-corrects the room's textures and also generates the rug tile, the rug fuzz and the fig leaf pictures.",
+  "why": "Downloaded textures rarely match the look of the reference images as they are.",
+  "how": "One script (`prepare_textures.py`) grades the oak, paint, walnut, linen, marble and others, and makes the generated pictures.",
+  "tech": [
+    {
+      "name": "Python scripts",
+      "kind": "method",
+      "plain": "Small programs that tell Blender what to build and bake, so every step can be repeated."
+    }
+  ],
+  "files": [
+    "pipeline/room/prepare_textures.py"
+  ],
+  "tags": [
+    "textures",
+    "pipeline"
+  ]
+}

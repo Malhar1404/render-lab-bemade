@@ -1,0 +1,35 @@
+{
+  "id": "2026-11-26-colour-match-the-mood-previews",
+  "date": "2026-11-26",
+  "time": "13:30",
+  "title": "Colour-match the mood previews",
+  "kind": "sub",
+  "parent": "2026-11-26-mood-grading-tests-morning-and-afternoon-previews",
+  "order": 2,
+  "area": "lighting",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "A second script colour-matches the previews so they can be compared fairly.",
+  "what": "A second script colour-matches the previews. The results are the pictures with `_graded` in their names.",
+  "why": "Raw renders differ in colour and brightness in ways that hide the real difference between moods.",
+  "how": "The script is `post_grade.py`.",
+  "tech": [
+    {
+      "name": "Python scripts",
+      "kind": "method",
+      "plain": "Small programs that tell Blender what to build and bake, so every step can be repeated."
+    },
+    {
+      "name": "Gamma and tone mapping",
+      "kind": "method",
+      "plain": "A way of squeezing very bright light into the range a screen can show."
+    }
+  ],
+  "files": [
+    "pipeline/room/post_grade.py"
+  ],
+  "tags": [
+    "mood",
+    "previews"
+  ]
+}

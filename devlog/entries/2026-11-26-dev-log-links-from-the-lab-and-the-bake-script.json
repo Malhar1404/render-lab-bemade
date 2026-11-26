@@ -1,0 +1,46 @@
+{
+  "id": "2026-11-26-dev-log-links-from-the-lab-and-the-bake-script",
+  "date": "2026-11-26",
+  "time": "16:35",
+  "title": "Links from the lab and the bake script",
+  "kind": "sub",
+  "parent": "2026-11-26-dev-log-system",
+  "order": 4,
+  "area": "tooling",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "The lab can log a snapshot, and every bake adds its own entry.",
+  "what": "The lab got a 'log snapshot' button and a 'Dev log' link, and the bake script now adds an entry when a bake succeeds.",
+  "why": "The most useful moments to record are the ones when something has just been made.",
+  "how": "- The snapshot button saves the canvas as a picture, asks for a title and note, and keeps the camera, mood and slider values as settings. Both only exist in the dev build.\n- The bake script writes a preview picture of the probe (`out/probe_<mood>_preview.jpg`) and adds a \"Bake: <mood>, <samples> samples\" entry.",
+  "tech": [
+    {
+      "name": "leva",
+      "kind": "library",
+      "plain": "Draws the small control panel with sliders in the lab."
+    },
+    {
+      "name": "Python scripts",
+      "kind": "method",
+      "plain": "Small programs that tell Blender what to build and bake, so every step can be repeated."
+    },
+    {
+      "name": "Node.js",
+      "kind": "tool",
+      "plain": "Runs small command-line programs, such as the dev log tool."
+    }
+  ],
+  "files": [
+    "src/App.tsx",
+    "src/index.css",
+    "pipeline/room/post_bake.py",
+    "pipeline/room/run_bake.sh"
+  ],
+  "tags": [
+    "devlog",
+    "tooling"
+  ],
+  "meta": {
+    "previewFormat": "Reinhard tone mapping, gamma 2.2, 1024 px wide JPG"
+  }
+}

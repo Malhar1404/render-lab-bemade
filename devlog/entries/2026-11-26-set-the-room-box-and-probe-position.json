@@ -1,0 +1,54 @@
+{
+  "id": "2026-11-26-set-the-room-box-and-probe-position",
+  "date": "2026-11-26",
+  "time": "13:20",
+  "title": "Set the room box and probe position",
+  "kind": "sub",
+  "parent": "2026-11-26-box-projected-probe-for-the-table-and-room",
+  "order": 2,
+  "area": "viewer",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "We told the helper how big the room is and where the probe was taken.",
+  "what": "We described the room as a box and told the helper where the probe was taken. The page sets this up once when it starts.",
+  "why": "Box projection needs the room's real size and the probe's position to place reflections correctly.",
+  "how": "The room is 8.6 m long, 3.2 m high and 6.2 m wide, and the probe sits 0.85 m above the floor in the middle.",
+  "tech": [
+    {
+      "name": "Box projection",
+      "kind": "method",
+      "plain": "A trick that makes reflections line up with the real walls instead of looking infinitely far away."
+    },
+    {
+      "name": "360-degree probe",
+      "kind": "method",
+      "plain": "A panorama of the room taken from the table. It lights and reflects in the table and chairs."
+    }
+  ],
+  "files": [
+    "src/config/moods.ts",
+    "src/main.tsx"
+  ],
+  "tags": [
+    "reflections"
+  ],
+  "meta": {
+    "ROOM_BOX": {
+      "centre": [
+        0,
+        1.6,
+        0
+      ],
+      "size": [
+        8.6,
+        3.2,
+        6.2
+      ]
+    },
+    "PROBE_POSITION": [
+      0,
+      0.85,
+      0
+    ]
+  }
+}

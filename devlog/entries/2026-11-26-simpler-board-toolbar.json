@@ -1,0 +1,25 @@
+{
+  "id": "2026-11-26-simpler-board-toolbar",
+  "date": "2026-11-26",
+  "time": "16:50",
+  "title": "Simpler board toolbar",
+  "kind": "sub",
+  "parent": "2026-11-26-dev-log-evidence-board-and-plain-language",
+  "area": "tooling",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "Cut the board toolbar down to a search box and one Date menu.",
+  "what": "Removed the outcome chips, the Area and Tag menus and the date chips. Dates are now one menu: All dates, Today, Last 7 days, each day that has entries, or Pick a range (shows From/To).",
+  "why": "The toolbar had too many filters and looked cluttered.",
+  "how": "Rewrote the toolbar in board/Board.tsx; the filter logic in filters.ts is unchanged.",
+  "beforeText": "Search, 4 outcome chips, Area, Tag, 3 date chips, From, To.",
+  "afterText": "Search and one Date menu.",
+  "files": [
+    "src/devlog/board/Board.tsx",
+    "src/devlog/board/board.css"
+  ],
+  "tags": [
+    "devlog",
+    "ui"
+  ]
+}

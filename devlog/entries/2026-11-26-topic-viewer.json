@@ -1,0 +1,31 @@
+{
+  "id": "2026-11-26-topic-viewer",
+  "date": "2026-11-26",
+  "time": "12:25",
+  "title": "Viewer",
+  "kind": "topic",
+  "parent": "2026-11-26-bemade-render-lab",
+  "order": 4,
+  "area": "viewer",
+  "outcome": "partial",
+  "author": "claude",
+  "summary": "The web page that shows the baked room with the table and chairs, and how the table is lit and reflected.",
+  "what": "The lab page itself, how the table is lit, and a key finding about brightness and reflections.",
+  "why": "We need to see the baked room and the live-lit table together in a browser, and tune them by eye.",
+  "how": "Three steps: write the viewer, find out why per-part brightness did nothing, and make reflections line up with the room.",
+  "tech": [
+    {
+      "name": "three.js",
+      "kind": "library",
+      "plain": "Draws 3D scenes in the web browser."
+    },
+    {
+      "name": "React Three Fiber",
+      "kind": "library",
+      "plain": "Lets us describe a three.js scene with React building blocks."
+    }
+  ],
+  "tags": [
+    "viewer"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-26-topic-lighting-moods",
+  "date": "2026-11-26",
+  "time": "10:55",
+  "title": "Lighting moods",
+  "kind": "topic",
+  "parent": "2026-11-26-bemade-render-lab",
+  "order": 3,
+  "area": "lighting",
+  "outcome": "partial",
+  "author": "claude",
+  "summary": "Calculating the changing light of the room for different times of day, and comparing the results.",
+  "what": "How the room looks at different times of day: the morning (day) bake, a comparison of morning and afternoon, and the evening mood.",
+  "why": "The table should look right whether it is shown in daylight or in the evening.",
+  "how": "The light is calculated once in Blender and saved as pictures (called baking). The web page then shows those pictures, which costs almost nothing while a visitor looks around.",
+  "next": "The day room still needs a rebake to get the new fixtures from the evening work.",
+  "tech": [
+    {
+      "name": "Cycles",
+      "kind": "tool",
+      "plain": "Blender's realistic renderer. It follows light the way a camera would see it."
+    },
+    {
+      "name": "Baking",
+      "kind": "method",
+      "plain": "Calculating the light once, in advance, and saving the result as pictures."
+    },
+    {
+      "name": "Light maps",
+      "kind": "method",
+      "plain": "Pictures of how bright each surface is, laid over the walls and floor so the browser does not have to calculate light."
+    }
+  ],
+  "tags": [
+    "lighting"
+  ]
+}

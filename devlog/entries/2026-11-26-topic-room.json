@@ -1,0 +1,19 @@
+{
+  "id": "2026-11-26-topic-room",
+  "date": "2026-11-26",
+  "time": "09:55",
+  "title": "Room",
+  "kind": "topic",
+  "parent": "2026-11-26-bemade-render-lab",
+  "order": 2,
+  "area": "pipeline",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "Building the room in Blender: textures, the room itself, the rug, the credenza and the walls.",
+  "what": "Everything about the room itself: the sky and textures, building the room, the rug, and the credenza and walls.",
+  "why": "A believable room is what makes the table look real.",
+  "how": "The room is built by a script, so every change can be repeated. Each step below was done in Blender.",
+  "tags": [
+    "room"
+  ]
+}

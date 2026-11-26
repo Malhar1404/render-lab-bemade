@@ -1,0 +1,80 @@
+{
+  "id": "2026-11-26-dev-log-evidence-board-and-plain-language",
+  "date": "2026-11-26",
+  "time": "17:30",
+  "title": "Dev log: evidence board and plain language",
+  "kind": "step",
+  "parent": "2026-11-26-topic-tools",
+  "order": 2,
+  "area": "tooling",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "The dev log now opens on a cork evidence board, and every entry is written in plain English.",
+  "what": "We added a board view to the dev log and made it the first page you see. It looks like a detective's evidence board: a cork background, cards pinned on it, and red string. The old timeline is still there as a second tab. We also rewrote every entry in plain language and sorted them into topics, steps and sub-tasks.",
+  "why": "A long list is hard to follow. The board shows what belongs together, what came after what, and what had to be done first. Plain words mean a client can follow the story too.",
+  "how": "- Topics run left to right, the steps of each topic run top to bottom in the order they were done, and sub-tasks hang beside their step.\n- Solid arrows say \"then\", dashed blue arrows say \"needed first\", and red strings join related cards.\n- Click a card to light up its branch and open the details beside the board.\n- Dragging a card saves its place; \"Reset layout\" puts everything back.",
+  "beforeText": "A single list of entries, newest first, with technical wording.",
+  "afterText": "A board of topics, steps and sub-tasks with arrows and strings, and plain-language detail pages.",
+  "wrong": "Two early layout problems: a header style on the page also hit the board's corner panels and hid the top row of cards, and the step cards of one column drifted sideways and overlapped.",
+  "fix": "The header class was renamed, and every column is now laid out as one straight stack after dagre has placed it.",
+  "next": "Check the form's drag-and-drop and paste in a real browser session.",
+  "links": [
+    {
+      "id": "2026-11-26-dev-log-system",
+      "label": "led to"
+    }
+  ],
+  "tech": [
+    {
+      "name": "React Flow",
+      "kind": "library",
+      "plain": "Draws the board and lets you zoom, pan and drag the cards."
+    },
+    {
+      "name": "dagre",
+      "kind": "library",
+      "plain": "Works out where each card goes, top to bottom, so nothing has to be placed by hand."
+    },
+    {
+      "name": "Auto-layout",
+      "kind": "method",
+      "plain": "The computer places the cards; only cards you move yourself are remembered."
+    }
+  ],
+  "files": [
+    "src/devlog/board/",
+    "src/devlog/Detail.tsx",
+    "src/devlog/Form.tsx",
+    "src/devlog/EntryPicker.tsx",
+    "src/devlog/tree.ts",
+    "src/devlog/types.ts",
+    "devlog/store.mjs",
+    "devlog/add.mjs",
+    "devlog/vitePlugin.ts",
+    "devlog.html",
+    "CONTEXT.md"
+  ],
+  "tags": [
+    "devlog",
+    "tooling",
+    "board"
+  ],
+  "images": [
+    {
+      "file": "board.jpg",
+      "caption": "The board, light mode",
+      "kind": "after"
+    },
+    {
+      "file": "board-panel.jpg",
+      "caption": "A card selected: its branch lit up and its details beside the board",
+      "kind": "screenshot"
+    }
+  ],
+  "meta": {
+    "@xyflow/react": "12.12.1",
+    "@dagrejs/dagre": "3.1.4",
+    "layoutFile": "devlog/board-layout.json",
+    "fonts": "Caveat, Permanent Marker, Inter (Google Fonts)"
+  }
+}

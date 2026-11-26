@@ -1,0 +1,74 @@
+{
+  "id": "2026-11-26-bake-and-measure-the-evening-room",
+  "date": "2026-11-26",
+  "time": "14:50",
+  "title": "Bake and measure",
+  "kind": "sub",
+  "parent": "2026-11-26-evening-mood-late-dusk-with-lamps-baked-and-wired",
+  "order": 4,
+  "area": "pipeline",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "We baked the evening room and compared it with the day room.",
+  "what": "We baked the evening room and measured it against the day room.",
+  "why": "To check that the evening is not over-bright and that nothing clips.",
+  "how": "- The `mood=evening` setting runs through all the pipeline scripts and the new `run_evening.sh`.\n- Blender bakes at 1024 samples.\n- Evening light maps are stored at half brightness, so bright spots do not clip (the day uses a quarter).\n- The probe keeps more of the lamps' warm colour than the day probe does.\n\nResults:\n- The evening file is 11.6 MB.\n- Compared with the day, the floor gets 69% of the light, the walls 83 to 91%, and the ceiling 96%.\n- Only the lamp stem is brighter than the picture format can hold.\n- The evening probe is darker than the day probe.",
+  "tech": [
+    {
+      "name": "Cycles",
+      "kind": "tool",
+      "plain": "Blender's realistic renderer. It follows light the way a camera would see it."
+    },
+    {
+      "name": "Baking",
+      "kind": "method",
+      "plain": "Calculating the light once, in advance, and saving the result as pictures."
+    },
+    {
+      "name": "Light maps",
+      "kind": "method",
+      "plain": "Pictures of how bright each surface is, laid over the walls and floor so the browser does not have to calculate light."
+    },
+    {
+      "name": "360-degree probe",
+      "kind": "method",
+      "plain": "A panorama of the room taken from the table. It lights and reflects in the table and chairs."
+    }
+  ],
+  "files": [
+    "pipeline/room/bake_room.py",
+    "pipeline/room/post_bake.py",
+    "pipeline/room/export_room.py",
+    "pipeline/room/optimize_room.sh",
+    "pipeline/room/run_bake.sh",
+    "pipeline/room/run_evening.sh"
+  ],
+  "tags": [
+    "evening",
+    "bake"
+  ],
+  "meta": {
+    "samples": 1024,
+    "LIGHT_SCALE": 2,
+    "NEUTRALIZE": 0.35,
+    "glbMB": 11.6,
+    "rawLightVsDay": {
+      "floor": 0.69,
+      "walls": "0.83-0.91",
+      "ceiling": 0.96
+    },
+    "lampStemP995": "3.61 (limit 2.0)",
+    "probeMeanBGR": {
+      "evening": [
+        0.107,
+        0.151,
+        0.206
+      ],
+      "day": [
+        0.243,
+        0.273,
+        0.304
+      ]
+    }
+  }
+}

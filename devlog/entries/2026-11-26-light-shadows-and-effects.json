@@ -1,0 +1,50 @@
+{
+  "id": "2026-11-26-light-shadows-and-effects",
+  "date": "2026-11-26",
+  "time": "12:50",
+  "title": "Light, shadows and effects",
+  "kind": "sub",
+  "parent": "2026-11-26-lab-viewer-room-table-chairs-and-effects",
+  "order": 3,
+  "area": "viewer",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "A warm key light, two soft contact shadows, and optional screen effects.",
+  "what": "We added a warm-white key light, two soft contact shadows, and optional screen effects.",
+  "why": "The table needs a little live light and grounding shadows on top of the baked room.",
+  "how": "- The key light is warm white (strength 0.8).\n- There are two soft contact shadows.\n- The effects are optional: soft corner shading (N8AO), tone mapping (Neutral) and smoother edges (SMAA).",
+  "tech": [
+    {
+      "name": "postprocessing",
+      "kind": "library",
+      "plain": "Adds screen effects such as tone mapping and smoother edges."
+    },
+    {
+      "name": "N8AO",
+      "kind": "library",
+      "plain": "Adds soft shading in corners and creases (ambient occlusion)."
+    },
+    {
+      "name": "three.js",
+      "kind": "library",
+      "plain": "Draws 3D scenes in the web browser."
+    },
+    {
+      "name": "Gamma and tone mapping",
+      "kind": "method",
+      "plain": "A way of squeezing very bright light into the range a screen can show."
+    }
+  ],
+  "files": [
+    "src/scene/Lighting.tsx",
+    "src/scene/Effects.tsx"
+  ],
+  "tags": [
+    "viewer"
+  ],
+  "meta": {
+    "keyLight": "#fff5e6, 0.8",
+    "shadows": "two ContactShadows",
+    "effects": "optional N8AO, Neutral tone mapping, SMAA"
+  }
+}

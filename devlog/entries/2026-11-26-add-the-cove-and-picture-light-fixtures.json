@@ -1,0 +1,35 @@
+{
+  "id": "2026-11-26-add-the-cove-and-picture-light-fixtures",
+  "date": "2026-11-26",
+  "time": "14:30",
+  "title": "Add the cove and picture-light fixtures",
+  "kind": "sub",
+  "parent": "2026-11-26-evening-mood-late-dusk-with-lamps-baked-and-wired",
+  "order": 2,
+  "area": "lighting",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "A hidden-light ledge near the ceiling and picture lights above the art.",
+  "what": "We added a ledge near the ceiling that hides a strip of light (the cove), and fixtures for the picture lights above the art. They are in both the day and the evening room.",
+  "why": "The evening mood needs real places for its lights to come from.",
+  "how": "The new parts are named `wall_*_cove_*` and `art_light_*` in `build_room.py`. Because they are also in the day room, the day room needs a rebake to show them.",
+  "tech": [
+    {
+      "name": "Blender",
+      "kind": "tool",
+      "plain": "Free 3D software. We use it to build the room and to calculate how light falls in it."
+    },
+    {
+      "name": "Python scripts",
+      "kind": "method",
+      "plain": "Small programs that tell Blender what to build and bake, so every step can be repeated."
+    }
+  ],
+  "files": [
+    "pipeline/room/build_room.py"
+  ],
+  "tags": [
+    "evening",
+    "cove"
+  ]
+}

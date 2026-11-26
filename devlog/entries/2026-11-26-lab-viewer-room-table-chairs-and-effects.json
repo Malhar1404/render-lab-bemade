@@ -1,0 +1,70 @@
+{
+  "id": "2026-11-26-lab-viewer-room-table-chairs-and-effects",
+  "date": "2026-11-26",
+  "time": "12:30",
+  "title": "The lab viewer",
+  "parent": "2026-11-26-topic-viewer",
+  "order": 1,
+  "area": "viewer",
+  "outcome": "partial",
+  "author": "claude",
+  "summary": "We wrote the lab page that shows the baked room, the table and chairs, and a control panel.",
+  "what": "We wrote the lab app: the baked room, the table, the chairs and the lighting, with a control panel for tuning. The code check passes and it builds.",
+  "why": "To see the baked room and the live-lit table together in the browser and tune them by eye.",
+  "how": "There are four parts, shown as sub-tasks: the room, the table and chairs, the light and effects, and the main page with its control panel.",
+  "wrong": "We have not yet confirmed in a real browser that the table's shaders compile without errors.",
+  "next": "- The user confirms the table renders with no shader errors.\n- Tune the top-env and top-scale sliders and give the values, so they can become the defaults.\n- Check whether the tone-exposure slider does anything: the tone-mapping effect may ignore it.\n- Add a planar (mirror-like) reflection on the tabletop, blurred by finish.",
+  "follows": [
+    "2026-11-26-morning-bake-light-maps-probe-and-glb"
+  ],
+  "tech": [
+    {
+      "name": "three.js",
+      "kind": "library",
+      "plain": "Draws 3D scenes in the web browser."
+    },
+    {
+      "name": "React Three Fiber",
+      "kind": "library",
+      "plain": "Lets us describe a three.js scene with React building blocks."
+    },
+    {
+      "name": "drei",
+      "kind": "library",
+      "plain": "A box of ready-made helpers for React Three Fiber, such as camera controls."
+    },
+    {
+      "name": "leva",
+      "kind": "library",
+      "plain": "Draws the small control panel with sliders in the lab."
+    },
+    {
+      "name": "postprocessing",
+      "kind": "library",
+      "plain": "Adds screen effects such as tone mapping and smoother edges."
+    },
+    {
+      "name": "N8AO",
+      "kind": "library",
+      "plain": "Adds soft shading in corners and creases (ambient occlusion)."
+    }
+  ],
+  "files": [
+    "src/App.tsx",
+    "src/scene/Room.tsx",
+    "src/scene/Table.tsx",
+    "src/scene/Chairs.tsx",
+    "src/scene/Lighting.tsx",
+    "src/scene/Effects.tsx",
+    "src/config/table.ts"
+  ],
+  "tags": [
+    "viewer",
+    "react-three-fiber"
+  ],
+  "meta": {
+    "backfilled": true,
+    "source": "CONTEXT.md and git log",
+    "note": "Written afterwards; the time only orders the timeline."
+  }
+}

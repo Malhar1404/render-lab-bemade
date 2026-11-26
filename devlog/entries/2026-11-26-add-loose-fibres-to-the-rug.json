@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-26-add-loose-fibres-to-the-rug",
+  "date": "2026-11-26",
+  "time": "11:50",
+  "title": "Add loose fibres to the rug",
+  "kind": "sub",
+  "parent": "2026-11-26-rug-a-generated-loomed-rug-instead-of-a",
+  "order": 3,
+  "area": "materials",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "Loose fibres give the rug a soft fuzz and a fringe at its edge.",
+  "what": "A second generator makes loose fibres, which are layered on the rug for fuzz and used for the edge fringe.",
+  "why": "A flat texture looks too clean. Loose fibres add the softness of real wool.",
+  "how": "The fibres are a small picture with see-through areas, 1024 pixels wide and covering 0.25 m.",
+  "tech": [
+    {
+      "name": "Python scripts",
+      "kind": "method",
+      "plain": "Small programs that tell Blender what to build and bake, so every step can be repeated."
+    }
+  ],
+  "files": [
+    "pipeline/room/prepare_textures.py"
+  ],
+  "tags": [
+    "rug",
+    "textures"
+  ],
+  "images": [
+    {
+      "file": "fuzz_prev.jpg",
+      "caption": "The generated fuzz fibres",
+      "kind": "render"
+    }
+  ]
+}

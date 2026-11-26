@@ -1,0 +1,59 @@
+{
+  "id": "2026-11-26-key-finding-scene-environmentintensity-overrides",
+  "date": "2026-11-26",
+  "time": "13:00",
+  "title": "Key finding: why per-part brightness did nothing",
+  "parent": "2026-11-26-topic-viewer",
+  "order": 2,
+  "area": "materials",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "We found why the configurator's table parts could not be given their own brightness, and fixed it in the lab.",
+  "what": "We found out why the configurator's table brightness could not be tuned part by part, and fixed it in the lab.",
+  "why": "In the configurator the bases were meant to be dim (a reflection strength of 0.2) but were as bright as the rest of the table.",
+  "how": "- In three.js, when a material has no environment picture of its own and the scene has one, the scene's setting overrides the material's own reflection strength.\n- So in the configurator the bases' 0.2 was ignored, and the whole table had one shared brightness of 1.46, the same as the room.\n- The lab gives each material the probe as its own environment picture, so every part has its own strength.\n- Starting values: top 2.2, base 1.46, chairs 2.0 (the top env, base env and chair env sliders).",
+  "wrong": "The reflection-strength setting (`envMapIntensity`) silently did nothing in the configurator.",
+  "fix": "Give each material its own environment picture (the probe), so its own strength is used.",
+  "next": "Tune the three values by eye and make them the defaults.",
+  "links": [
+    {
+      "id": "2026-11-26-table-and-chairs",
+      "label": "same issue"
+    }
+  ],
+  "tech": [
+    {
+      "name": "three.js",
+      "kind": "library",
+      "plain": "Draws 3D scenes in the web browser."
+    },
+    {
+      "name": "Environment strength",
+      "kind": "method",
+      "plain": "A setting that says how strongly the surrounding scene lights and reflects in a material."
+    },
+    {
+      "name": "360-degree probe",
+      "kind": "method",
+      "plain": "A panorama of the room taken from the table. It lights and reflects in the table and chairs."
+    }
+  ],
+  "files": [
+    "src/scene/Table.tsx",
+    "src/scene/Chairs.tsx",
+    "src/scene/Lighting.tsx"
+  ],
+  "tags": [
+    "finding",
+    "three.js",
+    "table"
+  ],
+  "meta": {
+    "backfilled": true,
+    "source": "CONTEXT.md and git log",
+    "note": "Written afterwards; the time only orders the timeline.",
+    "topEnv": 2.2,
+    "baseEnv": 1.46,
+    "chairEnv": 2
+  }
+}

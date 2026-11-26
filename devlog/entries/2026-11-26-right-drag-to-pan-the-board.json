@@ -1,0 +1,22 @@
+{
+  "id": "2026-11-26-right-drag-to-pan-the-board",
+  "date": "2026-11-26",
+  "time": "16:51",
+  "title": "Right-drag to pan the board",
+  "kind": "sub",
+  "parent": "2026-11-26-dev-log-evidence-board-and-plain-language",
+  "area": "tooling",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "Right (or middle) mouse drag now moves the board; left click selects a card.",
+  "what": "Panning moved from the left mouse button to the right and middle buttons. Left click selects a card; left drag on a card still moves it.",
+  "why": "The user asked for right-click pan and left-click select.",
+  "how": "React Flow panOnDrag={[1, 2]} in board/Board.tsx, and the browser's right-click menu is turned off on the board.",
+  "files": [
+    "src/devlog/board/Board.tsx"
+  ],
+  "tags": [
+    "devlog",
+    "ui"
+  ]
+}

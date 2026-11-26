@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-26-fix-three-lighting-bugs",
+  "date": "2026-11-26",
+  "time": "14:40",
+  "title": "Fix three lighting bugs",
+  "kind": "sub",
+  "parent": "2026-11-26-evening-mood-late-dusk-with-lamps-baked-and-wired",
+  "order": 3,
+  "area": "lighting",
+  "outcome": "worked",
+  "author": "claude",
+  "summary": "A review caught three mistakes in the first version before it was run.",
+  "what": "A review of the first version caught three mistakes before it was run, and we fixed them.",
+  "why": "Each of the three would have made the evening room light up wrongly.",
+  "how": "The directions were checked with a headless test script.",
+  "wrong": "- The cove lights pointed the wrong way.\n- The length and width of the strip lights were swapped.\n- The wrong colour socket was picked on the Mix nodes, because two sockets share the same name.",
+  "fix": "- Aim the cove lights the other way (`aim(d)` instead of `aim(-d)`).\n- Use the strip's length as the light's size.\n- Pick the Mix node's colour socket by its type (`RGBA`), not by its name.",
+  "tech": [
+    {
+      "name": "Blender",
+      "kind": "tool",
+      "plain": "Free 3D software. We use it to build the room and to calculate how light falls in it."
+    },
+    {
+      "name": "Python scripts",
+      "kind": "method",
+      "plain": "Small programs that tell Blender what to build and bake, so every step can be repeated."
+    }
+  ],
+  "files": [
+    "pipeline/room/build_room.py"
+  ],
+  "tags": [
+    "evening",
+    "cove",
+    "bug"
+  ]
+}
