@@ -183,7 +183,24 @@ Done:
 - Lab app written. It typechecks and builds. Runtime shader compilation is
   not yet confirmed in a browser.
 
-Not done: the lab has no git commit yet.
+- **Evening baked (2026-11-26), headless:** `sh pipeline/room/run_evening.sh [samples]`.
+  - Every pipeline script takes `mood=evening`. Outputs use their own
+    names: `out/room_evening*.blend`, `out/bake_evening/`,
+    `public/assets/room/room_evening.glb` and `public/env/room_evening_2k.hdr`.
+  - Lighting is set in `EVENING` in `build_room.py`: late dusk (no sun,
+    sky 0.2 tinted blue), fill 1.5 W, chandelier bulbs 4 W each, floor lamp
+    12 W plus a glowing shade, a picture light at 3 W, and an LED cove at
+    0.8 W per metre.
+  - New fixtures (in both moods): the ceiling cove ledge (`wall_*_cove_*`)
+    and the picture light (`art_light_*`). **The day room was not rebaked,
+    so it lacks them.**
+  - `glow_*` objects are emissive and unbaked.
+  - Evening light maps hold light / 2 (`lightScale` in `moods.ts`); the
+    evening probe uses `NEUTRALIZE` 0.35.
+  - In the app: evening starts at room exposure 1.1 and table env 1.65.
+    Switching mood now resets those two sliders.
+
+Committed: "First commit" (the evening bake and dev log are not committed yet).
 
 ### Waiting on the user
 
@@ -222,6 +239,58 @@ Not done: the lab has no git commit yet.
    oidn-web denoiser) that refines when the view is idle.
 6. **Afterwards:** port the results back into `demo-bemade`. Its own `Room.tsx`
    and `Env.tsx` are in `src/components/Viewer3D/SceneSetup/`.
+
+## Dev log
+
+A log of what we did, why, how and what went wrong, with images. It is written
+in simple, plain English that a non-technical client could follow; jargon goes
+in the `tech` cards and in the collapsed "Files and settings" section.
+
+- **Where:** `devlog/entries/<id>.json` (one entry per file, id
+  `YYYY-MM-DD-<slug>`) and `devlog/images/<id>/` (copied in, because
+  `pipeline/room/out/` is gitignored). The schema is `src/devlog/types.ts`.
+  Dragged board positions are saved in `devlog/board-layout.json`.
+- **Open it:** `npm run dev`, then http://localhost:5180/devlog.html. Two tabs:
+  **Board** (the default) and **Timeline**. Entries link as `devlog.html#<id>`.
+  The UI can add, edit and delete entries and paste images. The API
+  (including `GET/POST /api/devlog/layout`) exists only in the dev server and
+  is not in `vite build`.
+- **The board** is a detective's evidence board (React Flow + dagre, cork made
+  from inline SVG noise). Reading order is top to bottom: the project root,
+  then **topics** left to right; inside a topic the **steps** run top to
+  bottom in the order done (numbered badges, solid "then" arrows); **sub-tasks**
+  hang beside their step as small sticky notes. A dashed blue "needed first"
+  arrow means the step needed a card in another branch first (`follows`). Red
+  strings are related, caused, fixed-by or same-issue links (`links`). Click a
+  card to light up its branch and open its details beside the board; drag cards
+  to move them (saved); "Reset layout" re-runs the auto-layout.
+- **Entry fields beyond the basics:**
+  - `kind` (`topic` | `step` | `sub`, default `step`), `parent` (a topic's
+    parent is the root project, a step's is its topic, a sub-task's is its
+    step), `order` (else date and time decide the order of siblings).
+  - `follows` (ids from other branches), `links` (`{ id, label }`, labels such
+    as "caused", "fixed by", "led to", "same issue").
+  - `summary` (one plain sentence), `beforeText` / `afterText` (beside the
+    before and after images), `tech` (`{ name, kind: library|tool|method, plain }`).
+  - Entries with no `parent` land in "Not sorted yet" on the board.
+- **Add an entry from the command line** (no dev server needed; prints the id):
+  ```
+  npm run log -- --tree      # list ids as topic > step > sub
+  npm run log -- --kind step --parent 2026-11-26-topic-lighting-moods --order 4     --title "Warm up the evening lamps" --area lighting --outcome worked     --summary "Made the evening lamps a little warmer."     --what "..." --why "..." --how "..." --wrong "..." --fix "..."     --tech "Cycles::tool::Blender's realistic renderer that follows light"     --link "2026-11-26-evening-mood-late-dusk-with-lamps-baked-and-wired::led to"     --follows 2026-11-26-room-built-in-blender-with-build-room-py     --tags bake,evening --image "pipeline/room/out/x.png::Caption::render"
+  ```
+  `npm run log -- --help` lists every flag (`--kind`, `--parent`, `--order`,
+  `--follows a,b`, `--link id::label` and `--tech "name::kind::plain"`, both
+  repeatable, `--summary`, `--before-text`, `--after-text`, `--json <file>`,
+  `--update <id>`, `--meta '<json>'`, `--files`, `--commit`, `--date`,
+  `--time`).
+- **In the lab:** the leva button "log snapshot" saves the canvas, camera and
+  slider values as an entry (it lands in "Not sorted yet" until given a
+  parent). `run_bake.sh` adds a "Bake: <mood>" sub-task with a probe preview
+  when a bake succeeds, under the matching mood's bake step.
+- **Rule: Claude adds a dev-log entry at the end of every task, in plain
+  language (what, why, how, what went wrong, with images where useful), as a
+  step under the right topic (or a sub-task under a step), with `--tech` cards
+  and `--follows` / `--link` where they really apply.**
 
 ## Organisation rules
 

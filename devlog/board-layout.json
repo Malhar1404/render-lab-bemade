@@ -1,4 +1,21 @@
 {
   "version": 2,
-  "positions": {}
+  "positions": {
+    "2026-11-26-pick-the-garden-sky-and-remove-its-sun": {
+      "x": 1473,
+      "y": 1230
+    },
+    "2026-11-26-mood-grading-tests-morning-and-afternoon-previews": {
+      "x": 2809,
+      "y": 2513
+    },
+    "2026-11-26-board-background-plain-black": {
+      "x": 3523,
+      "y": 1323
+    },
+    "2026-11-26-morning-bake-light-maps-probe-and-glb": {
+      "x": 1555,
+      "y": 703
+    }
+  }
 }

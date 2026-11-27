@@ -1,10 +1,11 @@
 """Build the dining room (reference look: daylight, glass wall, oak, rug).
 
-blender -b --factory-startup -P pipeline/room/build_room.py -- <repo>
+blender -b --factory-startup -P pipeline/room/build_room.py -- <repo> [mood=evening]
 
 Needs fetch_assets.py, prepare_env.py and prepare_textures.py run first.
-Writes out/room.blend (for previews and bakes) and
-public/assets/room/room_v2.glb (physical materials, no baked light).
+Writes out/room.blend (for previews and bakes) and out/room_unbaked.glb
+(physical materials, no baked light). mood=evening writes
+out/room_evening.blend and out/room_evening_unbaked.glb instead.
 
 Blender is Z-up; the GLB is Y-up: three.js (x, y, z) = Blender (x, z, -y).
 The table stands at the origin, its length along x. The window wall is at
@@ -21,13 +22,18 @@ import bpy
 from mathutils import Matrix, Vector
 
 ARGS = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
+# mood=day|evening anywhere in the arguments picks the lighting and the
+# output names (day keeps the original names).
+MOOD = next((a.split("=", 1)[1] for a in ARGS if a.startswith("mood=")), "day")
+ARGS = [a for a in ARGS if not a.startswith("mood=")]
+SUFFIX = "" if MOOD == "day" else f"_{MOOD}"
 REPO = ARGS[0] if ARGS else os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
 # This folder; the repo root is two levels up (pipeline/room).
 HERE = os.path.dirname(os.path.abspath(__file__))
 CACHE = os.path.join(HERE, ".cache")
 OUT = os.path.join(HERE, "out")
 TEX = os.path.join(OUT, "tex")
-LOG = os.path.join(OUT, "build.log")
+LOG = os.path.join(OUT, f"build{SUFFIX}.log")
 
 # Room: inner faces of the walls, metres.
 # Sized for the largest table (3.18 x 1.58 m) with chairs pulled out on a
@@ -41,15 +47,52 @@ GLASS_PANELS = 4
 # Credenza on the +X wall, centred at this y.
 CRED_Y = 0.3
 # Preview/bake lights (Blender watts): overhead fill and each chandelier bulb.
-FILL_POWER = 6.0
+# By day (2026-11-26) the fill is nearly off and the chandelier is off: with
+# them on (6 W fill, 6 W a bulb) the room read as lamp-lit and flat, with no
+# fall-off into the corners away from the window.
+FILL_POWER = 0.0  # daylight only (2026-11-26)
+DAY_CHANDELIER_ON = False
 # Morning light (chosen 2026-11-25): sun height and heading (towards the sun,
 # from the room), colour, strength against the measured sun, sky strength.
 SUN_ELEVATION = 30.0
 SUN_HEADING = (-0.5, 0.85)
 SUN_COLOR = (1.0, 0.96, 0.9)
-SUN_SCALE = 0.85
-SKY_STRENGTH = 0.9
+# 0.65 with sky 4.5 (chosen 2026-11-26 from Cycles previews): softer sun
+# stripes, and the far wall and corners lit by the sky, not lamps.
+SUN_SCALE = 0.65
+# Doubled (2026-11-26): with no fill or lamps, the far wall and corners
+# went too dark at 0.9.
+SKY_STRENGTH = 4.5
 BULB_POWER = 6.0
+
+# Evening (late dusk, chosen 2026-11-26): no sun, a dim blue sky, and the
+# room's own lights at household levels. Blender watts, set against the day
+# light above, so the room reads as a lamp-lit evening without blowing out
+# its shadows. Each lamp gets a soft but finite source size, so its shadows
+# have real penumbras.
+EVENING = {
+    "sky_strength": 0.2,
+    # Twilight blue over the (daytime) garden sky.
+    "sky_tint": (0.62, 0.74, 1.0),
+    # The photographer's fill, nearly off: the lamps carry the room.
+    "fill_power": 1.5,
+    # Chandelier, per bulb: dimmed warm filaments (2700 K).
+    "bulb_power": 4.0,
+    # Floor lamp: one bulb inside the shade; the shade glows (emission).
+    "lamp_power": 12.0,
+    "shade_glow": 1.6,
+    # Picture light over the art: a narrow wash down the canvas.
+    "picture_power": 3.0,
+    # LED cove round the ceiling: watts per metre of strip (3000 K).
+    "cove_power_per_m": 0.8,
+}
+WARM_2700 = (1.0, 0.72, 0.45)
+WARM_3000 = (1.0, 0.78, 0.56)
+# LED cove: a plaster ledge on the three solid walls, below the ceiling,
+# its upturned lip hiding the strip. Depth from the wall, top height.
+COVE_DEPTH, COVE_TOP, COVE_LIP = 0.16, H - 0.24, 0.07
+# Picture light: brass bar centred over the art, its height and reach.
+PICTURE_Z, PICTURE_REACH, PICTURE_LEN = 2.78, 0.2, 0.9
 
 random.seed(7)
 _log = []
@@ -193,7 +236,9 @@ def make_materials():
     M["globe"] = material("chandelier_glass", base=(0.78, 0.72, 0.64), rough=0.02,
                           transmission=1.0, ior=1.5)
     M["bulb"] = material("chandelier_bulb", base=(1, 1, 1), rough=0.5,
-                         emission=(1.0, 0.62, 0.32), emission_strength=60.0)
+                         emission=(1.0, 0.62, 0.32),
+                         # Off by day: lit bulbs read as lamps on (2026-11-26).
+                         emission_strength=60.0 if MOOD == "evening" or DAY_CHANDELIER_ON else 0.0)
     M["concrete"] = material("planter_concrete", rough=0.85, color_tex=tex("concrete"),
                              normal_tex=src("white_plaster_02", "nor"), normal_strength=0.5)
     M["reveal"] = material("credenza_reveal", base=(0.02, 0.018, 0.016), rough=0.8)
@@ -207,10 +252,22 @@ def make_materials():
                          coat=0.2, coat_rough=0.2, double_sided=True)
     M["shade"] = material("lamp_shade_linen", rough=0.95, color_tex=tex("linen"), sheen=0.4,
                           double_sided=True)
+    # Lit from inside: the linen glows. Named glow_* objects are not baked,
+    # so the viewer keeps this emission.
+    M["shade_glow"] = material("lamp_shade_glow", rough=0.95, color_tex=tex("linen"), sheen=0.4,
+                               emission=(1.0, 0.74, 0.5), emission_strength=EVENING["shade_glow"],
+                               double_sided=True)
+    M["led"] = material("picture_light_led", base=(1, 1, 1), rough=0.5,
+                        emission=WARM_3000, emission_strength=25.0)
     M["ceramic"] = material("decor_ceramic", base=(0.42, 0.36, 0.3), rough=0.6)
     M["stone_bowl"] = material("decor_stone", base=(0.7, 0.66, 0.6), rough=0.7)
     M["book_a"] = material("decor_book_cream", base=(0.82, 0.79, 0.72), rough=0.8)
     M["book_b"] = material("decor_book_taupe", base=(0.45, 0.4, 0.35), rough=0.8)
+    # Light oak door (2026-11-26): walnut read nearly black on the shaded wall.
+    M["door_oak"] = material("door_oak", rough=0.5, color_tex=tex("floor_oak"))
+    M["paint_clay"] = material("art_paint_clay", base=(0.52, 0.33, 0.24), rough=0.9)
+    M["paint_ochre"] = material("art_paint_ochre", base=(0.66, 0.52, 0.3), rough=0.9)
+    M["paint_charcoal"] = material("art_paint_charcoal", base=(0.1, 0.095, 0.09), rough=0.9)
     return M
 
 
@@ -351,7 +408,10 @@ def build_shell(M):
     s, t = 0.08, 0.012
     box("skirting_left", -RX, -RX + t, -RY, RY, 0, s, M["skirting"])
     box("skirting_right", RX - t, RX, -RY, RY, 0, s, M["skirting"])
-    box("skirting_front", -RX, RX, -RY, -RY + t, 0, s, M["skirting"])
+    # Broken by the door on this wall (build_front_wall).
+    gap0, gap1 = DOOR_X - DOOR_W / 2 - DOOR_TRIM, DOOR_X + DOOR_W / 2 + DOOR_TRIM
+    box("skirting_front_a", -RX, gap0, -RY, -RY + t, 0, s, M["skirting"])
+    box("skirting_front_b", gap1, RX, -RY, -RY + t, 0, s, M["skirting"])
     box("skirting_window", GLASS_X1, RX, RY - t, RY, 0, s, M["skirting"])
     return floor
 
@@ -567,6 +627,63 @@ def build_chandelier(M):
     return root
 
 
+# The wall opposite the window (2026-11-26): a walnut door towards the
+# left, a large painting centred behind the table, two brass sconces.
+DOOR_X, DOOR_W, DOOR_H = -2.75, 0.92, 2.2
+DOOR_TRIM = 0.07
+
+
+def build_front_wall(M):
+    """Door, painting and sconces on the wall facing the glass (y = -RY)."""
+    y = -RY
+    # Door: a flush walnut slab with three fine vertical grooves, white
+    # architrave round it, brass lever handle.
+    x0, x1 = DOOR_X - DOOR_W / 2, DOOR_X + DOOR_W / 2
+    box("door_slab", x0, x1, y, y + 0.03, 0.006, DOOR_H, M["door_oak"], tile=1.2, rot=True)
+    for i in (1, 2, 3):
+        gx = x0 + DOOR_W * i / 4
+        box(f"door_groove_{i}", gx - 0.003, gx + 0.003, y + 0.03, y + 0.032, 0.1, DOOR_H - 0.1, M["reveal"])
+    t, d = DOOR_TRIM, 0.022
+    box("door_trim_l", x0 - t, x0, y, y + d, 0, DOOR_H + t, M["skirting"])
+    box("door_trim_r", x1, x1 + t, y, y + d, 0, DOOR_H + t, M["skirting"])
+    box("door_trim_t", x0 - t, x1 + t, y, y + d, DOOR_H, DOOR_H + t, M["skirting"])
+    hx, hz = x1 - 0.08, 1.02
+    cylinder("door_rose", (hx, y + 0.03, hz), (hx, y + 0.042, hz), 0.026, M["brass"], 32)
+    cylinder("door_lever_neck", (hx, y + 0.042, hz), (hx, y + 0.085, hz), 0.009, M["brass"], 16)
+    cylinder("door_lever", (hx, y + 0.085, hz), (hx - 0.13, y + 0.085, hz), 0.009, M["brass"], 16)
+
+    # Painting: a wide abstract in warm earth tones, slim black frame.
+    pc, w, h, zc = 0.45, 1.9, 1.15, 1.6
+    px0, px1, z0, z1 = pc - w / 2, pc + w / 2, zc - h / 2, zc + h / 2
+    f, fd = 0.018, 0.04
+    box("painting_frame_t", px0 - f, px1 + f, y, y + fd, z1, z1 + f, M["frame"])
+    box("painting_frame_b", px0 - f, px1 + f, y, y + fd, z0 - f, z0, M["frame"])
+    box("painting_frame_l", px0 - f, px0, y, y + fd, z0, z1, M["frame"])
+    box("painting_frame_r", px1, px1 + f, y, y + fd, z0, z1, M["frame"])
+    box("painting_canvas", px0 + 0.005, px1 - 0.005, y, y + 0.03, z0 + 0.005, z1 - 0.005, M["canvas"], tile=0.8)
+    # Soft colour fields, each a thin raised layer (u from, u to, v from, v to).
+    fields = [
+        (0.04, 0.42, 0.08, 0.62, "paint_clay"),
+        (0.30, 0.74, 0.40, 0.94, "art_b"),
+        (0.62, 0.96, 0.06, 0.52, "paint_ochre"),
+        (0.10, 0.30, 0.66, 0.92, "paint_charcoal"),
+        (0.48, 0.60, 0.14, 0.34, "art_a"),
+    ]
+    for i, (a, b, p, q, m) in enumerate(fields):
+        lift = 0.032 + 0.0015 * i
+        box(f"painting_field_{i}", px0 + w * a, px0 + w * b, y + 0.03, y + lift,
+            z0 + h * p, z0 + h * q, M[m], tile=0.8)
+
+    # Sconces either side of the painting: brass plate and arm, linen shade
+    # (off by day).
+    for i, sx in enumerate((px0 - 0.45, px1 + 0.45)):
+        sz = 1.72
+        cylinder(f"sconce_plate_{i}", (sx, y, sz - 0.08), (sx, y + 0.012, sz - 0.08), 0.045, M["brass"], 32)
+        cylinder(f"sconce_arm_{i}", (sx, y + 0.012, sz - 0.08), (sx, y + 0.14, sz - 0.02), 0.007, M["brass"], 12)
+        lathe(f"sconce_shade_{i}", [(0.0, 0.0), (0.07, 0.0), (0.06, 0.15), (0.0, 0.15)],
+              (sx, y + 0.15, sz - 0.03), M["shade"], steps=48)
+
+
 def build_plants(M):
     path = os.path.join(CACHE, "models", "potted_plant_01", "potted_plant_01_2k.gltf")
     placements = [((-RX + 0.55, RY - 0.5), 1.15, 160.0)]
@@ -584,7 +701,9 @@ def build_plants(M):
                 o.parent = root
             if o.type == "MESH":
                 for slot in o.material_slots:
-                    if slot.material and "pot" in slot.material.name.lower():
+                    # Only the pot ("..._pot"): "potted_plant_01_leaves" contains "pot" too,
+                    # which turned the leaves to concrete (fixed 2026-11-27).
+                    if slot.material and slot.material.name.lower().endswith("_pot"):
                         slot.material = M["concrete"]
         root.location = (pos[0], pos[1], 0)
         root.scale = (scale,) * 3
@@ -680,16 +799,68 @@ def build_floor_lamp(M, pos):
     parts = [
         cylinder("lamp_base", (x, y, 0), (x, y, 0.02), 0.15, M["black_metal"], 48),
         cylinder("lamp_stem", (x, y, 0.02), (x, y, 1.42), 0.01, M["black_metal"], 12),
-        lathe("lamp_shade", [(0.2, 1.3), (0.2, 1.62), (0.197, 1.62), (0.197, 1.3)], (x, y, 0), M["shade"], 64),
+        lathe("glow_lamp_shade" if MOOD == "evening" else "lamp_shade",
+              [(0.2, 1.3), (0.2, 1.62), (0.197, 1.62), (0.197, 1.3)], (x, y, 0),
+              M["shade_glow"] if MOOD == "evening" else M["shade"], 64),
     ]
     for p in parts:
         p.parent = root
+
+
+def build_cove(M):
+    """Ceiling LED cove on the three solid walls: a ledge with an upturned
+    lip. Parts are named wall_<side>_cove_*, so they bake with their wall."""
+    d, z, lip, t = COVE_DEPTH, COVE_TOP, COVE_LIP, 0.04
+    y_end = RY - 0.25  # stops short of the curtains on the window wall
+    # left (-X) and right (+X) walls, along y
+    for side, x, s in (("left", -RX, 1), ("right", RX, -1)):
+        xa, xb = sorted((x, x + s * d))
+        box(f"wall_{side}_cove_shelf", xa, xb, -RY + d, y_end, z - t, z, M["ceiling"], tile=2.0)
+        xl = x + s * d
+        xa, xb = sorted((xl, xl - s * 0.02))
+        box(f"wall_{side}_cove_lip", xa, xb, -RY + d, y_end, z, z + lip, M["ceiling"], tile=2.0)
+    # front (-Y) wall, along x
+    box("wall_front_cove_shelf", -RX, RX, -RY, -RY + d, z - t, z, M["ceiling"], tile=2.0)
+    box("wall_front_cove_lip", -RX, RX, -RY + d - 0.02, -RY + d, z, z + lip, M["ceiling"], tile=2.0)
+
+
+def cove_strips():
+    """The cove's LED strips: (centre, length, along-x, towards-room)."""
+    d, z = COVE_DEPTH, COVE_TOP + 0.012
+    y_end = RY - 0.25
+    ly = y_end - (-RY + d)
+    cy = (y_end + (-RY + d)) / 2
+    return [
+        (Vector((-RX + 0.05, cy, z)), ly, False, Vector((1, 0, 0))),
+        (Vector((RX - 0.05, cy, z)), ly, False, Vector((-1, 0, 0))),
+        (Vector((0, -RY + 0.05, z)), 2 * RX - 2 * d, True, Vector((0, 1, 0))),
+    ]
+
+
+def build_picture_light(M):
+    """A slim brass picture light over the art: wall plate, two arms, bar.
+    Named art_light_* so it bakes with the art; its LED slit (evening only)
+    is glow_*, so the viewer keeps it lit."""
+    c = CRED_Y
+    x = RX - PICTURE_REACH
+    z = PICTURE_Z
+    half = PICTURE_LEN / 2
+    box("art_light_plate", RX - 0.012, RX, c - 0.05, c + 0.05, z + 0.02, z + 0.1, M["brass"])
+    for i, yy in enumerate((c - 0.25, c + 0.25)):
+        cylinder(f"art_light_arm_{i}", (RX - 0.01, yy, z + 0.06), (x, yy, z), 0.006, M["brass"], 12)
+    cylinder("art_light_bar", (x, c - half, z), (x, c + half, z), 0.022, M["brass"], 32)
+    if MOOD == "evening":
+        box("glow_art_light", x - 0.008, x + 0.008, c - half + 0.02, c + half - 0.02,
+            z - 0.0225, z - 0.019, M["led"])
 
 
 # --------------------------------------------------------------------------
 # Lighting for previews and bakes (not exported).
 
 def build_lighting():
+    if MOOD == "evening":
+        build_evening_lighting()
+        return
     import json
     env = json.load(open(os.path.join(OUT, "env", "env.json")))
     irr = sum(env["sun_irradiance_rgb"]) / 3
@@ -734,8 +905,8 @@ def build_lighting():
 
     # Chandelier bulbs light the room too (the emissive bulbs alone sit
     # inside refractive globes, which block direct light in Cycles); the
-    # globes don't cast shadows of their own.
-    for o in bpy.data.objects:
+    # globes don't cast shadows of their own. Off by day (DAY_CHANDELIER_ON).
+    for o in (bpy.data.objects if DAY_CHANDELIER_ON else []):
         if o.name.startswith("ch_globe_"):
             o.visible_shadow = False
         if o.name.startswith("ch_bulb_"):
@@ -749,6 +920,96 @@ def build_lighting():
             lo.location = sum((o.matrix_world @ Vector(c) for c in o.bound_box), Vector()) / 8
 
 
+def add_light(name, kind, energy, color, location, size=0.0, rotation=None):
+    ld = bpy.data.lights.new(name, kind)
+    ld.energy = energy
+    ld.color = color
+    if kind == "POINT":
+        ld.shadow_soft_size = size
+    lo = bpy.data.objects.new(name, ld)
+    bpy.context.scene.collection.objects.link(lo)
+    lo.location = location
+    if rotation is not None:
+        lo.rotation_euler = rotation
+    return lo
+
+
+def aim(direction):
+    """Rotation pointing a light's -Z along direction."""
+    return Vector(direction).normalized().to_track_quat("-Z", "Y").to_euler()
+
+
+def build_evening_lighting():
+    """Late dusk: twilight sky only (no sun) and the room's lamps on."""
+    E = EVENING
+    world = bpy.data.worlds.new("dusk")
+    bpy.context.scene.world = world
+    try:
+        world.use_nodes = True
+    except Exception:
+        pass
+    nt = world.node_tree
+    bg = next(n for n in nt.nodes if n.type == "BACKGROUND")
+    et = nt.nodes.new("ShaderNodeTexEnvironment")
+    et.image = bpy.data.images.load(os.path.join(OUT, "env", "garden_4k.hdr"))
+    mix = nt.nodes.new("ShaderNodeMix")
+    mix.data_type = "RGBA"
+    mix.blend_type = "MULTIPLY"
+    mix.inputs["Factor"].default_value = 1.0
+    # Mix has float, vector and colour sockets of the same names.
+    a = next(s for s in mix.inputs if s.name == "A" and s.type == "RGBA")
+    b = next(s for s in mix.inputs if s.name == "B" and s.type == "RGBA")
+    res = next(s for s in mix.outputs if s.name == "Result" and s.type == "RGBA")
+    nt.links.new(et.outputs["Color"], a)
+    b.default_value = (*E["sky_tint"], 1)
+    nt.links.new(res, bg.inputs["Color"])
+    bg.inputs["Strength"].default_value = E["sky_strength"]
+
+    fill = add_light("table_fill", "AREA", E["fill_power"], (1.0, 0.9, 0.8), (0, 0, H - 0.05))
+    fill.data.shape = "RECTANGLE"
+    fill.data.size, fill.data.size_y = 3.0, 1.6
+    fill.visible_camera = False
+
+    # Chandelier bulbs (the globes cast no shadows of their own).
+    n = 0
+    for o in list(bpy.data.objects):
+        if o.name.startswith("ch_globe_"):
+            o.visible_shadow = False
+        if o.name.startswith("ch_bulb_"):
+            o.visible_shadow = False
+            c = sum((o.matrix_world @ Vector(v) for v in o.bound_box), Vector()) / 8
+            add_light(o.name + "_light", "POINT", E["bulb_power"], WARM_2700, c, size=0.02)
+            n += 1
+    log("chandelier bulbs", n)
+
+    # Floor lamp: a bulb in the shade, light out of its top and bottom.
+    lx, ly = RX - 0.35, CRED_Y - 1.75
+    add_light("floor_lamp_bulb", "POINT", E["lamp_power"], WARM_2700, (lx, ly, 1.47), size=0.04)
+
+    # Picture light: a long thin area light under the bar, aimed down the
+    # canvas (centre about 1.85 m), narrow spread.
+    px, pz = RX - PICTURE_REACH, PICTURE_Z - 0.025
+    pl = add_light("picture_light", "AREA", E["picture_power"], WARM_3000, (px, CRED_Y, pz),
+                   rotation=aim((PICTURE_REACH - 0.03, 0, -0.9)))
+    pl.data.shape = "RECTANGLE"
+    # Aimed with local Y kept up-ish, local X runs along the bar (size).
+    pl.data.size, pl.data.size_y = PICTURE_LEN - 0.04, 0.02
+    pl.data.spread = math.radians(100)
+    pl.visible_camera = False
+
+    # LED cove: strips on the ledge, aimed up and out over the ceiling.
+    for i, (c, length, along_x, inward) in enumerate(cove_strips()):
+        d = inward * 0.5 + Vector((0, 0, 1))
+        lo = add_light(f"cove_led_{i}", "AREA", E["cove_power_per_m"] * length, WARM_3000, c,
+                       rotation=aim(d))
+        lo.data.shape = "RECTANGLE"
+        # Aimed with local Y kept up-ish, local X runs along the strip.
+        lo.data.size, lo.data.size_y = length, 0.015
+        lo.data.spread = math.radians(120)
+        lo.visible_camera = False
+    log("evening lights built")
+
+
 # --------------------------------------------------------------------------
 
 def export_glb():
@@ -757,7 +1018,7 @@ def export_glb():
         o.select_set(True)
     # The unbaked room (physical materials only); the viewer gets the baked
     # one from bake_room.py + export_room.py.
-    path = os.path.join(OUT, "room_unbaked.glb")
+    path = os.path.join(OUT, f"room{SUFFIX}_unbaked.glb")
     bpy.ops.export_scene.gltf(
         filepath=path,
         export_format="GLB",
@@ -799,11 +1060,14 @@ def main():
     build_plants(M)
     build_fig(M, (RX - 0.55, RY - 0.55), height=2.2)
     build_floor_lamp(M, (RX - 0.35, CRED_Y - 1.75))
+    build_cove(M)
+    build_picture_light(M)
+    build_front_wall(M)
     build_lighting()
     bpy.context.scene.unit_settings.system = "METRIC"
     os.makedirs(OUT, exist_ok=True)
-    bpy.ops.wm.save_as_mainfile(filepath=os.path.join(OUT, "room.blend"))
-    log("saved room.blend")
+    bpy.ops.wm.save_as_mainfile(filepath=os.path.join(OUT, f"room{SUFFIX}.blend"))
+    log("saved", f"room{SUFFIX}.blend", "mood", MOOD)
     export_glb()
 
 

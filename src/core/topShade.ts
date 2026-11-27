@@ -5,6 +5,7 @@ import {
   CHANDELIER_DECLARATIONS,
   chandelierUniforms,
 } from './chandelierLight';
+import { PLANAR_DECLARATIONS, PLANAR_PATCH, planarUniforms } from './planarReflection';
 
 /**
  * Shade under the table top, for the base.
@@ -320,6 +321,7 @@ export const applyTableShading = (
       diffuseRolloffUniforms,
       topFinishUniforms,
       isTop ? decorReflectionUniforms : {},
+      isTop ? planarUniforms : {},
     );
     shader.vertexShader = shader.vertexShader
       .replace(
@@ -350,9 +352,12 @@ ${OUTGOING_LIGHT}`,
         .replace(
           '#include <common>',
           `#include <common>
-${DECOR_REFLECTION_DECLARATIONS}`,
+${DECOR_REFLECTION_DECLARATIONS}
+${PLANAR_DECLARATIONS}`,
         )
-        .replace('#include <lights_fragment_maps>', DECOR_REFLECTION_PATCH);
+        .replace('#include <lights_fragment_maps>', DECOR_REFLECTION_PATCH)
+        // After the decor patch, so it goes first: the decor (when on) covers it.
+        .replace('#include <lights_fragment_maps>', PLANAR_PATCH);
     }
     if (underTop) {
       shader.fragmentShader = shader.fragmentShader.replace(
@@ -371,7 +376,7 @@ ${DECOR_REFLECTION_DECLARATIONS}`,
     underTop
       ? 'tableShading-base-contact-v6'
       : isTop
-        ? 'tableShading-top-v2'
+        ? 'tableShading-top-v3'
         : 'tableShading-v2';
   material.needsUpdate = true;
 };

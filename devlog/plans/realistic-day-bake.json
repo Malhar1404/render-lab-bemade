@@ -18,7 +18,16 @@
     { "text": "New wall opposite the window: light oak door, a large painting and two brass wall lights (off by day)." },
     { "text": "Light-map sizes by need, not 2K everywhere: floor 4096; rug, window wall and credenza wall 2048; other walls, ceiling, credenza, plants and curtains 1024; small things 512 or 256." },
     { "text": "Clean the bake noise with Blender's own denoiser (OIDN) instead of the filter that smeared it into crayon blotches." },
-    { "text": "Bake one item at a time and check each before the next." }
+    { "text": "Bake one item at a time and check each before the next." },
+    { "text": "Blender's adaptive sampling was stopping dim pixels early, so more samples did nothing. Turned it off: the credenza's noise dropped about 5 times and its mottled look went away." },
+    { "text": "Re-baked the curtains and window wall with full samples (4096): noise fell from 0.18 to 0.06 and from 0.12 to 0.04. The floor (0.08) was left as it was.", "images": [
+      { "file": "curtains_old_vs_full_samples.jpg", "caption": "Curtains: first bake (left), full samples (right)" },
+      { "file": "wall_window_old_vs_full_samples.jpg", "caption": "Window wall: first bake (left), full samples (right)" }
+    ] },
+    { "text": "Found and fixed: the potted plant's leaves were being given the concrete pot material (its name 'potted_plant_01_leaves' contains 'pot'), so they were grey. Only the pot is swapped now." },
+    { "text": "Export: light maps stored as RGBM, lossless (round-trip error about 0.3%, against about 3% before); colour textures 1024 except floor and rug (2048); the plant's light as 16-bit vertex colours. The room file grew from 11 MB to 35 MB, mostly the 4096 floor map (10.5 MB): fine for the lab, can be made lighter later." },
+    { "text": "The lab now uses AgX tone mapping like the Blender renders, with day exposure 2.46 (Blender's +1.3 stops)." },
+    { "text": "Light-map layout checked per group: walls, floor, rug, ceiling use 93-100% of their maps, furniture 74-87%, so no layout change. The potted plant used 1% (176,000 leaf faces), the cause of its crayon look: its light is baked into the model's points instead of an image." }
   ],
   "steps": [
     { "id": "lighting", "title": "Set the daylight in Blender and review", "status": "done" },
@@ -36,14 +45,31 @@
       { "file": "wall_window_lm_full_denoised.jpg", "caption": "Window wall light map (the black area is unused space in the map)" },
       { "file": "wall_window_lm_crop_before_after.jpg", "caption": "Close-up of a shaded part: raw bake (left), cleaned (right)" }
     ] },
-    { "id": "wall-right", "title": "Bake the credenza wall (2048)", "status": "next" },
-    { "id": "walls-soft", "title": "Bake the far wall, side wall and ceiling (1024 each)", "status": "todo" },
-    { "id": "furniture", "title": "Bake the credenza and curtains (1024)", "status": "todo" },
-    { "id": "plants", "title": "Bake the plant, fig and pots (1024, leaves given fair space)", "status": "todo" },
-    { "id": "small", "title": "Bake the door, painting, art, window frames, terrace, lamp and wall lights", "status": "todo" },
-    { "id": "probe", "title": "Render the 360 reflection photo from the table", "status": "todo" },
-    { "id": "export", "title": "Export without lossy compression, keeping detail in dark areas", "status": "todo" },
-    { "id": "app", "title": "Check in the lab, match the look (AgX tone mapping, exposure), compare with the target", "status": "todo" },
+    { "id": "wall-right", "title": "Bake the credenza wall (2048)", "status": "done", "images": [
+      { "file": "wall_right_lm_full_denoised.jpg", "caption": "Credenza wall light map (black: wall hidden behind the art and credenza)" },
+      { "file": "wall_right_lm_crop_before_after.jpg", "caption": "Close-up: raw bake (left), cleaned (right)" }
+    ] },
+    { "id": "walls-soft", "title": "Bake the far wall, side wall and ceiling (1024 each)", "status": "done", "images": [
+      { "file": "soft_walls_ceiling_overview.jpg", "caption": "Far wall, side wall and ceiling light maps (brightened)" },
+      { "file": "wall_front_lm_crop_before_after.jpg", "caption": "Far wall close-up by the painting: raw bake (left), cleaned (right)" }
+    ] },
+    { "id": "furniture", "title": "Bake the credenza and curtains (1024)", "status": "done", "images": [
+      { "file": "credenza_curtains_overview.jpg", "caption": "Credenza (left) and curtains (right) light maps; black = hidden faces" },
+      { "file": "credenza_lm_crop_before_after.jpg", "caption": "Credenza close-up, first bake: raw (left); cleaned but still mottled (right)" },
+      { "file": "credenza_2048_vs_8192_cleaned.jpg", "caption": "Credenza re-baked with full samples: before (left), after (right), mottling gone" }
+    ] },
+    { "id": "plants", "title": "Bake the potted plant into its points, then the fig (1024)", "status": "done", "images": [
+      { "file": "plant_truth_vs_points.jpg", "caption": "Potted plant: true Cycles render (left), its light baked into the points as the lab will show it (right)" },
+      { "file": "fig_lm_before_after.jpg", "caption": "Fig light map: raw bake (left), cleaned (right)" }
+    ] },
+    { "id": "small", "title": "Bake the door, painting, art, window frames, terrace, lamp and wall lights", "status": "done", "images": [
+      { "file": "small_items_lm_overview.jpg", "caption": "Small items' light maps (512 and 256), cleaned" }
+    ] },
+    { "id": "probe", "title": "Render the 360 reflection photo from the table", "status": "done", "images": [
+      { "file": "probe_day_preview.jpg", "caption": "The 360 view from just above the table, with the new daylight, door wall and green plant" }
+    ] },
+    { "id": "export", "title": "Export without lossy compression, keeping detail in dark areas", "status": "done" },
+    { "id": "app", "title": "Check in the lab, match the look (AgX tone mapping, exposure), compare with the target", "status": "next" },
     { "id": "log", "title": "Write one dev log entry for all of this, with the images", "status": "todo" }
   ]
 }

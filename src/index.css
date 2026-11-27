@@ -3,3 +3,6 @@ body { font-family: system-ui, sans-serif; }
 .moods { position: fixed; left: 16px; bottom: 16px; display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(8px); }
 .moods button { border: 0; padding: 8px 18px; border-radius: 999px; background: transparent; color: #ddd; font: 500 14px system-ui; cursor: pointer; }
 .moods button.on { background: #f3efe8; color: #1b1a18; }
+.moods a.devlog-link { align-self: center; margin-left: 4px; padding: 8px 14px; border-radius: 999px; color: #bbb; font: 500 13px system-ui; text-decoration: none; }
+.moods a.devlog-link:hover { color: #fff; background: rgba(255, 255, 255, 0.1); }
+.toast { position: fixed; left: 16px; bottom: 72px; max-width: 420px; padding: 10px 14px; border-radius: 10px; background: rgba(20, 20, 20, 0.85); color: #eee; font: 13px/1.4 system-ui; }

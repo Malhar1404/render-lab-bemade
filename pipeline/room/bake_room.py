@@ -1,6 +1,6 @@
 """Bake the room's light into light maps, and render its reflection probe.
 
-blender -b -P pipeline/room/bake_room.py -- <repo> [samples] [only]
+blender -b -P pipeline/room/bake_room.py -- <repo> [samples] [only] [mood=evening]
 
 Opens out/room.blend (from build_room.py), joins the room's parts into bake
 groups, gives each a second UV layer ("lightmap"), and bakes its diffuse
@@ -13,7 +13,9 @@ has one light map. Also renders a 360 panorama from the table to
 out/bake/room_probe.hdr (the room's reflections in the viewer).
 
 Saves out/room_baked.blend for export_room.py. `only` = comma list of
-groups to rebake (the others are skipped).
+groups to rebake (the others are skipped). mood=evening reads
+out/room_evening.blend and writes out/bake_evening/ and
+out/room_evening_baked.blend.
 """
 import math
 import os
@@ -24,14 +26,19 @@ import bmesh
 import bpy
 
 ARGS = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
+# mood=day|evening anywhere in the arguments picks the lighting and the
+# output names (day keeps the original names).
+MOOD = next((a.split("=", 1)[1] for a in ARGS if a.startswith("mood=")), "day")
+ARGS = [a for a in ARGS if not a.startswith("mood=")]
+SUFFIX = "" if MOOD == "day" else f"_{MOOD}"
 REPO = ARGS[0]
 SAMPLES = int(ARGS[1]) if len(ARGS) > 1 else 256
 ONLY = set(ARGS[2].split(",")) if len(ARGS) > 2 and ARGS[2] else None
 # This folder; the repo root is two levels up (pipeline/room).
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "out")
-BAKE = os.path.join(OUT, "bake")
-LOG = os.path.join(OUT, "bake.log")
+BAKE = os.path.join(OUT, f"bake{SUFFIX}")
+LOG = os.path.join(OUT, f"bake{SUFFIX}.log")
 _log = []
 
 
@@ -47,27 +54,80 @@ def starts(*prefixes, exclude=()):
 
 # group: (object-name test, light map size)
 GROUPS = {
-    "floor": (lambda n: n == "floor", 2048),
-    # One light map per wall, so each gets the full 2048 (the web caps
-    # textures at 2048): about 4 mm per pixel.
-    "wall_left": (starts("wall_left", "skirting_left"), 2048),
-    "wall_right": (starts("wall_right", "skirting_right"), 2048),
-    "wall_front": (starts("wall_front", "skirting_front"), 2048),
-    "wall_window": (starts("wall_window", "reveal_", "skirting_window", "curtain_track"), 2048),
-    "ceiling": (lambda n: n == "ceiling", 2048),
+    # Sizes by how big each part is and how sharp its light is (2026-11-26):
+    # sun stripes need pixels, soft bounce light does not.
+    "floor": (lambda n: n == "floor", 4096),
     "rug": (lambda n: n == "rug", 2048),
+    "wall_window": (starts("wall_window", "reveal_", "skirting_window", "curtain_track"), 2048),
+    "wall_right": (starts("wall_right", "skirting_right"), 2048),
+    "wall_left": (starts("wall_left", "skirting_left"), 1024),
+    "wall_front": (starts("wall_front", "skirting_front"), 1024),
+    "ceiling": (lambda n: n == "ceiling", 1024),
     "curtains": (starts("curtain_", exclude=("curtain_track",)), 1024),
-    "credenza": (starts("credenza_", "decor_"), 2048),
-    "art": (starts("art_"), 1024),
-    "window": (starts("frame_"), 512),
-    "terrace": (lambda n: n == "terrace", 1024),
+    "credenza": (starts("credenza_", "decor_"), 1024),
     "plants": (starts("potted_plant_01"), 1024),
     "fig": (starts("fig_"), 1024),
-    "lamp": (starts("lamp_"), 512),
+    "art": (starts("art_"), 512),
+    "door": (starts("door_"), 512),
+    "painting": (starts("painting_"), 512),
+    "window": (starts("frame_"), 512),
+    "terrace": (lambda n: n == "terrace", 512),
+    "lamp": (starts("lamp_"), 256),
+    "sconces": (starts("sconce_"), 256),
 }
 
 
 RUG_BOUNDS = {}
+
+# Groups whose light goes into the mesh's points (a colour attribute per face
+# corner), not a light-map image (2026-11-27). The potted plant is 176,000
+# small leaf faces: packed into one image each leaf got a few pixels (1% of
+# the map used), which read as crayon blobs. Its points are dense enough to
+# carry the light themselves. Saved to lm_<group>_points.npy, since every run
+# rebuilds the groups from room.blend.
+POINT_GROUPS = {"plants"}
+POINT_ATTR = "baked_light"
+
+
+def point_light_path(group):
+    return os.path.join(BAKE, f"lm_{group}_points.npy")
+
+
+def add_point_light(obj):
+    me = obj.data
+    attr = me.color_attributes.get(POINT_ATTR) or me.color_attributes.new(POINT_ATTR, "FLOAT_COLOR", "CORNER")
+    me.color_attributes.active_color = attr
+    return attr
+
+
+def bake_points(group, obj):
+    import numpy as np
+    attr = add_point_light(obj)
+    select_only([obj], obj)
+    sc = bpy.context.scene
+    sc.render.bake.use_pass_direct = True
+    sc.render.bake.use_pass_indirect = True
+    sc.render.bake.use_pass_color = False
+    bpy.ops.object.bake(type="DIFFUSE", target="VERTEX_COLORS")
+    data = np.empty(len(attr.data) * 4, dtype=np.float32)
+    attr.data.foreach_get("color", data)
+    np.save(point_light_path(group), data)
+    log("baked points", group, len(attr.data), "corners, mean", float(data.reshape(-1, 4)[:, :3].mean()))
+
+
+def restore_points(group, obj):
+    """Put a previous run's baked point light back (for export)."""
+    import numpy as np
+    path = point_light_path(group)
+    if not os.path.exists(path):
+        return
+    attr = add_point_light(obj)
+    data = np.load(path)
+    if len(data) != len(attr.data) * 4:
+        log("point light size mismatch", group, len(data), len(attr.data) * 4)
+        return
+    attr.data.foreach_set("color", data)
+    log("restored points", group)
 
 
 def planar_uv(me, lm, verts, matrix):
@@ -99,6 +159,10 @@ def setup_cycles():
         except Exception:
             continue
     sc.cycles.samples = SAMPLES
+    # Every pixel gets all the samples: adaptive sampling stopped early on
+    # dim faces, so raising SAMPLES did not reduce their noise (2026-11-27).
+    sc.cycles.use_adaptive_sampling = False
+    log("samples", SAMPLES, "adaptive", sc.cycles.use_adaptive_sampling)
     sc.cycles.max_bounces = 8
     sc.cycles.sample_clamp_indirect = 10
     sc.cycles.caustics_refractive = False
@@ -234,7 +298,7 @@ def render_probe():
 
 def main():
     os.makedirs(BAKE, exist_ok=True)
-    bpy.ops.wm.open_mainfile(filepath=os.path.join(OUT, "room.blend"))
+    bpy.ops.wm.open_mainfile(filepath=os.path.join(OUT, f"room{SUFFIX}.blend"))
     setup_cycles()
     # The stand-in table and chairs (live preview) must not shadow the bake.
     # Excluding its layer collection takes it out of the scene entirely.
@@ -253,6 +317,13 @@ def main():
             continue
         obj = join_group(group, objs)
         own_materials(group, obj)
+        if group in POINT_GROUPS:
+            if ONLY and group not in ONLY:
+                restore_points(group, obj)
+                log("skip bake", group)
+            else:
+                bake_points(group, obj)
+            continue
         add_lightmap_uv(group, obj)
         if ONLY and group not in ONLY:
             log("skip bake", group)
@@ -271,8 +342,8 @@ def main():
     if not ONLY or "probe" in ONLY:
         render_probe()
         log("probe rendered")
-    bpy.ops.wm.save_as_mainfile(filepath=os.path.join(OUT, "room_baked.blend"))
-    log("saved room_baked.blend")
+    bpy.ops.wm.save_as_mainfile(filepath=os.path.join(OUT, f"room{SUFFIX}_baked.blend"))
+    log("saved", f"room{SUFFIX}_baked.blend")
 
 
 if __name__ == "__main__":

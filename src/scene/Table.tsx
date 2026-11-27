@@ -4,7 +4,8 @@ import { useEffect, useMemo, useRef } from 'react';
 import * as THREE from 'three';
 
 import { addBoxProjection } from '../core/boxProjection';
-import { applyTableShading, updateTopShade } from '../core/topShade';
+import { renderTopReflection } from '../core/planarReflection';
+import { applyTableShading, getTopBounds, updateTopShade } from '../core/topShade';
 import {
   BASE_FINISHES,
   type BaseFinishId,
@@ -166,12 +167,19 @@ export const Table = ({ top, base, colour, baseFinish, probe, topEnv, baseEnv }:
 
   // The base's contact shade and the top's roll-off follow the top's bounds.
   const topRef = useRef<THREE.Group>(null);
-  useFrame(() => {
-    if (topRef.current) updateTopShade(topRef.current);
+  const tableRef = useRef<THREE.Group>(null);
+  useFrame(({ gl, scene, camera }) => {
+    if (!topRef.current) return;
+    updateTopShade(topRef.current);
+    // The room mirrored in the top (planarReflection.ts), before the frame.
+    const bounds = getTopBounds();
+    if (!bounds.isEmpty() && tableRef.current) {
+      renderTopReflection(gl, scene, camera, bounds.max.y, [tableRef.current]);
+    }
   });
 
   return (
-    <group>
+    <group ref={tableRef}>
       <group ref={topRef}>
         <primitive object={topObject} />
       </group>

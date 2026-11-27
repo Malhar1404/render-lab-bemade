@@ -26,6 +26,17 @@ MOOD = ARGS[4] if len(ARGS) > 4 else "base"  # base = the room as built (morning
 # sky strength, overhead fill (W), exposure, leaf shadows from the garden.
 MOODS = {
     "base": None,
+    # Daylight only (2026-11-26): no fill, chandelier off (build_room.py).
+    "sun_only": dict(elev=30, heading=(-0.5, 0.85), color=(1.0, 0.96, 0.9), sun=0.85,
+                     sky=0.0, fill=0.0, exposure=0.55, leaves=False),
+    "sun_sky": dict(elev=30, heading=(-0.5, 0.85), color=(1.0, 0.96, 0.9), sun=0.85,
+                    sky=1.8, fill=0.0, exposure=1.3, leaves=False),
+    "sun_sky23": dict(elev=30, heading=(-0.5, 0.85), color=(1.0, 0.96, 0.9), sun=0.85,
+                      sky=2.3, fill=0.0, exposure=1.3, leaves=False),
+    "sun_sky45": dict(elev=30, heading=(-0.5, 0.85), color=(1.0, 0.96, 0.9), sun=0.85,
+                      sky=4.5, fill=0.0, exposure=1.3, leaves=False),
+    "sun65_sky45": dict(elev=30, heading=(-0.5, 0.85), color=(1.0, 0.96, 0.9), sun=0.65,
+                        sky=4.5, fill=0.0, exposure=1.3, leaves=False),
     "morning": dict(elev=30, heading=(-0.5, 0.85), color=(1.0, 0.96, 0.9), sun=0.85,
                     sky=0.9, fill=6.0, exposure=0.55, leaves=False),
     "afternoon": dict(elev=17, heading=(-0.55, 0.83), color=(1.0, 0.76, 0.52), sun=1.0,
@@ -46,6 +57,10 @@ def log(*a):
 # name: (location, target, focal length mm)
 CAMERAS = {
     "a": ((-3.2, -2.5, 1.3), (0.9, 0.9, 0.55), 28),
+    # The credenza wall, straight on.
+    "k": ((0.6, -0.6, 1.4), (4.2, 0.3, 1.05), 26),
+    # The wall opposite the window: door, painting, sconces.
+    "w": ((0.6, 2.4, 1.45), (-0.6, -3.1, 1.3), 22),
     "b": ((-1.8, -2.55, 0.8), (0.6, 0.7, 0.5), 28),
     # Low close-up across the rug corner (like the rug reference crops).
     "r": ((-2.3, -2.4, 0.6), (-0.6, -0.6, 0.05), 40),
